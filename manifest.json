@@ -1,0 +1,17 @@
+{
+  "name": "Thị Trấn Xu Vàng",
+  "short_name": "Xu Vàng",
+  "description": "Trò chơi kinh tế học cho bé từ 7 tuổi",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#FFFBEB",
+  "theme_color": "#FDE68A",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
