@@ -323,11 +323,14 @@
           </div>
         </div>
 
-        <div class="flex flex-wrap items-center justify-between gap-2 bg-white/80 rounded-xl px-3 py-2 border border-orange-200">
-          <span class="text-xs font-bold text-slate-700">💳 Thẻ Tích Điểm Khách Quen (4 Xu/ngày • +25% khách quay lại)</span>
-          <button id="btn-toggle-crm" type="button" class="kid-btn px-3 py-1.5 rounded-xl font-extrabold text-xs bg-slate-200 text-slate-700">
-            Đang Tắt
-          </button>
+        <div class="space-y-2 bg-white/80 rounded-xl p-2.5 border border-orange-200">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span class="text-xs font-bold text-slate-700">🎁 Chiến Lược Tặng Quà &amp; Giữ Chân Theo Tệp Khách (CRM):</span>
+            <button id="btn-toggle-crm" type="button" class="kid-btn px-3 py-1 rounded-xl font-extrabold text-xs bg-slate-200 text-slate-700">
+              Đang Tắt
+            </button>
+          </div>
+          <div id="crm-strategy-options" class="grid grid-cols-1 sm:grid-cols-3 gap-1.5"></div>
         </div>
       </div>
 
@@ -658,8 +661,8 @@
           <span>-8 Xu</span>
         </div>
         <div id="sum-crm-row" class="hidden flex justify-between text-rose-600 text-xs">
-          <span>💳 Chi phí thẻ tích điểm:</span>
-          <span>-4 Xu</span>
+          <span>💳 Chi phí ưu đãi CRM theo tệp:</span>
+          <span id="sum-crm">-4 Xu</span>
         </div>
         <div id="sum-loan-row" class="hidden flex justify-between text-purple-700 text-xs">
           <span>🏦 Trả góp Ngân hàng Heo Đất:</span>
@@ -779,6 +782,11 @@
       const BASE_COSTS = { lemonade: 3, cookie: 4, tea: 5 };
       const HELPER_COST = 8;
       const CRM_COST = 4;
+      const CRM_STRATEGIES = [
+        { id: 'student', icon: '🎒', name: 'Học sinh / SV', desc: 'Mua 2 ly tặng 1 bánh • +35% khách nhóm', cost: 4 },
+        { id: 'office', icon: '💼', name: 'Dân văn phòng', desc: 'Freeship & Tặng bánh đơn nhóm • +40% Trà Đào', cost: 6 },
+        { id: 'tourist', icon: '📸', name: 'Khách du lịch', desc: 'Combo Đặc sản + Quà nhỏ • +45% ngày Nắng/Lễ', cost: 5 }
+      ];
 
       const LOCATIONS = [
         { id: 'home', name: 'Trước Cửa Nhà', rent: 0, mult: 1.0, icon: '🏠' },
@@ -891,6 +899,7 @@
           locationId: 'home',
           deliveryEnabled: false,
           crmEnabled: false,
+          crmStrategy: 'student',
           branch2Owned: false,
           loanRemaining: 0,
           loanDaysLeft: 0,
@@ -1102,11 +1111,21 @@
         const crmBtn = document.getElementById('btn-toggle-crm');
         if (state.crmEnabled) {
           crmBtn.textContent = 'Đang Bật ✅';
-          crmBtn.className = 'kid-btn px-3 py-1.5 rounded-xl font-extrabold text-xs bg-orange-600 text-white';
+          crmBtn.className = 'kid-btn px-3 py-1 rounded-xl font-extrabold text-xs bg-orange-600 text-white';
         } else {
           crmBtn.textContent = 'Đang Tắt';
-          crmBtn.className = 'kid-btn px-3 py-1.5 rounded-xl font-extrabold text-xs bg-slate-200 text-slate-700';
+          crmBtn.className = 'kid-btn px-3 py-1 rounded-xl font-extrabold text-xs bg-slate-200 text-slate-700';
         }
+        const crmBox = document.getElementById('crm-strategy-options');
+        crmBox.innerHTML = CRM_STRATEGIES.map((st) => {
+          const active = state.crmEnabled && state.crmStrategy === st.id;
+          return `
+            <button type="button" data-crm-strat="${st.id}" class="kid-btn p-2 rounded-lg border-2 text-left transition ${active ? 'border-orange-500 bg-orange-50 shadow-sm' : 'border-slate-200 bg-white hover:bg-orange-50/40'}">
+              <div class="font-extrabold text-[11px] text-slate-800">${st.icon} ${st.name} (${st.cost}🪙)</div>
+              <div class="text-[10px] font-medium text-slate-600">${st.desc}</div>
+            </button>
+          `;
+        }).join('');
 
         // Branch 2 (Lv.7)
         const b2Btn = document.getElementById('btn-open-branch2');
@@ -1514,7 +1533,13 @@
         const helperBoost = state.level >= 3 && state.hireHelper ? 1.4 : 1;
         const locObj = state.level >= 5 ? (LOCATIONS.find((l) => l.id === state.locationId) || LOCATIONS[0]) : LOCATIONS[0];
         const deliveryBoost = state.level >= 5 && state.deliveryEnabled ? 1.5 : 1;
-        const crmBoost = state.level >= 6 && state.crmEnabled ? 1.25 : 1;
+        let crmBoost = 1;
+        if (state.level >= 6 && state.crmEnabled) {
+          if (state.crmStrategy === 'student') crmBoost = (w.id === 'sunny' || w.id === 'festival' || w.id === 'cloudy') ? 1.35 : 1.15;
+          else if (state.crmStrategy === 'office') crmBoost = (w.id === 'cloudy' || w.id === 'rainy') ? (item === 'tea' ? 1.45 : 1.3) : 1.2;
+          else if (state.crmStrategy === 'tourist') crmBoost = (w.id === 'sunny' || w.id === 'festival') ? 1.45 : 1.15;
+          else crmBoost = 1.25;
+        }
         const lanternBonus = state.level >= 2 && state.upgrades.includes('lantern') ? 2 : 0;
 
         const priceDiff = price - fair;
@@ -1535,7 +1560,8 @@
           return;
         }
         const locObj = state.level >= 5 ? (LOCATIONS.find((l) => l.id === state.locationId) || LOCATIONS[0]) : LOCATIONS[0];
-        const fixedNeed = (state.level >= 3 && state.hireHelper ? HELPER_COST : 0) + locObj.rent + (state.level >= 6 && state.crmEnabled ? CRM_COST : 0);
+        const activeCrmObj = state.level >= 6 && state.crmEnabled ? (CRM_STRATEGIES.find((x) => x.id === state.crmStrategy) || { cost: CRM_COST }) : { cost: 0 };
+        const fixedNeed = (state.level >= 3 && state.hireHelper ? HELPER_COST : 0) + locObj.rent + activeCrmObj.cost;
         if (state.jars.spend < fixedNeed) {
           sfx.error();
           showToast(`Ví cần ít nhất ${fixedNeed} Xu để trả chi phí cố định (mặt bằng/nhân viên/thẻ)!`);
@@ -1641,7 +1667,7 @@
 
         const costOfGoods = (soldLem + wastedLem) * lemCost + (soldCoo + wastedCoo) * cooCost + (soldTea + wastedTea) * teaCost;
         const helperWage = state.level >= 3 && state.hireHelper ? HELPER_COST : 0;
-        const crmFee = state.level >= 6 && state.crmEnabled ? CRM_COST : 0;
+        const crmFee = state.level >= 6 && state.crmEnabled ? (CRM_STRATEGIES.find((x) => x.id === state.crmStrategy)?.cost || CRM_COST) : 0;
 
         // Branch 2 passive net profit (Level 7)
         let branch2Net = 0;
@@ -1738,6 +1764,7 @@
 
         document.getElementById('sum-helper-row').classList.toggle('hidden', helperWage === 0);
         document.getElementById('sum-crm-row').classList.toggle('hidden', crmFee === 0);
+        document.getElementById('sum-crm').textContent = `-${crmFee} Xu`;
 
         const loanRow = document.getElementById('sum-loan-row');
         loanRow.classList.toggle('hidden', loanPaid === 0);
@@ -1920,6 +1947,16 @@
       document.getElementById('btn-toggle-crm').addEventListener('click', () => {
         if (isSimulating) return;
         state.crmEnabled = !state.crmEnabled;
+        sfx.pop();
+        saveState();
+        renderAll();
+      });
+
+      document.getElementById('crm-strategy-options').addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-crm-strat]');
+        if (!btn || isSimulating) return;
+        state.crmEnabled = true;
+        state.crmStrategy = btn.dataset.crmStrat;
         sfx.pop();
         saveState();
         renderAll();
