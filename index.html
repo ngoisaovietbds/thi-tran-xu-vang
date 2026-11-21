@@ -58,7 +58,7 @@
         />
         <div class="min-w-0">
           <div class="flex items-center gap-1.5">
-            <h1 class="text-base sm:text-xl font-extrabold text-amber-900 truncate">Thị Trấn Xu Vàng</h1>
+            <h1 id="app-title" class="text-base sm:text-xl font-extrabold text-amber-900 truncate">Thị Trấn Xu Vàng</h1>
             <span id="header-level-badge" class="text-[10px] font-black bg-amber-300 text-amber-950 px-2 py-0.5 rounded-md shrink-0">Level 1</span>
           </div>
           <p class="text-xs font-semibold text-amber-700 truncate" id="header-day">Ngày 1 • Trời nắng ☀️</p>
@@ -66,6 +66,12 @@
       </div>
 
       <div class="flex items-center gap-1.5 shrink-0">
+        <button
+          id="btn-lang"
+          type="button"
+          class="kid-btn px-2 py-1.5 rounded-full bg-amber-50 hover:bg-amber-100 border-2 border-amber-300 text-xs font-extrabold text-amber-900"
+          title="Đổi ngôn ngữ / Switch language"
+        >🌐 VI</button>
         <button
           id="btn-level-gate"
           type="button"
@@ -112,16 +118,16 @@
     <!-- Navigation Tabs -->
     <nav class="max-w-4xl mx-auto px-3 sm:px-6 pb-2.5 grid grid-cols-4 gap-1.5 sm:gap-2">
       <button type="button" data-tab="shop" class="tab-btn kid-btn py-2 px-1.5 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-1 bg-amber-400 text-amber-950 border-2 border-amber-500 shadow-sm">
-        <span>🏪</span><span class="truncate">Tiệm Nhỏ</span>
+        <span>🏪</span><span id="nav-shop" class="truncate">Tiệm Nhỏ</span>
       </button>
       <button type="button" data-tab="jars" class="tab-btn kid-btn py-2 px-1.5 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-1 bg-white text-slate-700 border-2 border-slate-200 hover:bg-amber-50">
-        <span>🏺</span><span class="truncate">3 Hũ Tiền</span>
+        <span>🏺</span><span id="nav-jars" class="truncate">3 Hũ Tiền</span>
       </button>
       <button type="button" data-tab="quiz" class="tab-btn kid-btn py-2 px-1.5 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-1 bg-white text-slate-700 border-2 border-slate-200 hover:bg-amber-50">
-        <span>🧠</span><span class="truncate">Nhu Cầu</span>
+        <span>🧠</span><span id="nav-quiz" class="truncate">Nhu Cầu</span>
       </button>
       <button type="button" data-tab="badges" class="tab-btn kid-btn py-2 px-1.5 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-1 bg-white text-slate-700 border-2 border-slate-200 hover:bg-amber-50">
-        <span>🏆</span><span class="truncate">Huy Hiệu</span>
+        <span>🏆</span><span id="nav-badges" class="truncate">Huy Hiệu</span>
       </button>
     </nav>
   </header>
@@ -151,7 +157,7 @@
         class="w-12 h-12 rounded-xl object-cover border border-amber-300 shrink-0 hidden sm:block"
       />
       <div class="flex-1 min-w-0">
-        <span class="inline-block text-xs font-extrabold uppercase tracking-wide text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full mb-1">Lời khuyên của Bé Heo Xu</span>
+        <span id="mascot-badge" class="inline-block text-xs font-extrabold uppercase tracking-wide text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full mb-1">Lời khuyên của Bé Heo Xu</span>
         <p id="mascot-tip" class="text-sm sm:text-base font-semibold text-slate-800"></p>
       </div>
     </section>
@@ -881,6 +887,7 @@
 
       function createInitialState() {
         return {
+          lang: 'vi',
           level: 1,
           day: 1,
           lvl2ProfitDays: 0,
@@ -1011,19 +1018,86 @@
         return false;
       }
 
+
+      const I18N = {
+        vi: {
+          title: 'Thị Trấn Xu Vàng',
+          nav: ['Tiệm Nhỏ', '3 Hũ Tiền', 'Nhu Cầu', 'Huy Hiệu'],
+          mascotBadge: 'Lời khuyên của Bé Heo Xu',
+          openShop: '🔔 Mở Cửa Hàng Bán Ngay!',
+          nextDay: 'Sang Ngày Mới ☀️',
+          coin: 'Xu',
+          dayWord: 'Ngày',
+          weathers: ['Trời nắng', 'Trời mát', 'Trời mưa', 'Lễ hội'],
+          weatherTitles: ['Trời Nắng Đẹp!', 'Trời Mát Dịu!', 'Trời Mưa Lất Phất!', 'Ngày Hội Thị Trấn!'],
+          weatherDescs: [
+            'Khách khát nước nên tìm mua rất nhiều Nước Chanh 🍋 & Trà Đào 🍑!',
+            'Thời tiết dễ chịu, cả đồ uống và Bánh Quy 🍪 đều có khách!',
+            'Ít quầy mở cửa! Khách thèm Bánh Quy ấm 🍪 và sẵn sàng trả giá cao hơn.',
+            'Rất đông khách nhưng nhiều đối thủ! Giá phải cạnh tranh để bán số lượng lớn.'
+          ],
+          tips: [
+            'Trời nắng ấm, đồ uống mát rất chạy! Bé hãy tính toán lượng nhập hợp lý nhé.',
+            'Trời mát mẻ, cả đồ uống và bánh đều bán đều đặn!',
+            'Trời mưa ít đối thủ! Bán Bánh Quy giá cao vẫn có lãi tốt.',
+            'Ngày Lễ Hội rất đông khách! Hãy giữ giá hợp lý để bán được thật nhiều hàng nhé.'
+          ]
+        },
+        en: {
+          title: 'Golden Coin Town',
+          nav: ['My Shop', '3 Jars', 'Needs Quiz', 'Badges'],
+          mascotBadge: 'Piggy Bank Tip',
+          openShop: '🔔 Open Shop Now!',
+          nextDay: 'Next Day ☀️',
+          coin: 'Coins',
+          dayWord: 'Day',
+          weathers: ['Sunny', 'Mild', 'Rainy', 'Festival'],
+          weatherTitles: ['Sunny Day!', 'Mild & Breezy!', 'Rainy Day!', 'Town Festival!'],
+          weatherDescs: [
+            'Customers are thirsty and want lots of Lemonade 🍋 & Peach Tea 🍑!',
+            'Nice weather — both drinks and Butter Cookies 🍪 sell steadily!',
+            'Fewer stands open! Customers crave warm Cookies 🍪 and pay more.',
+            'Huge crowds & tough competition! Keep prices competitive for volume.'
+          ],
+          tips: [
+            'Warm sunny day! Cold drinks sell fast — stock carefully to avoid spoilage.',
+            'Mild weather is great for balanced sales of both drinks and cookies!',
+            'Rainy day means fewer competitors! You can price Cookies a bit higher.',
+            'Festival Day brings huge crowds! Competitive pricing wins big volume.'
+          ]
+        }
+      };
+
+      function applyLanguage() {
+        const isEn = state.lang === 'en';
+        const t = I18N[isEn ? 'en' : 'vi'];
+        document.getElementById('btn-lang').textContent = isEn ? '🌐 EN' : '🌐 VI';
+        document.getElementById('app-title').textContent = t.title;
+        document.getElementById('nav-shop').textContent = t.nav[0];
+        document.getElementById('nav-jars').textContent = t.nav[1];
+        document.getElementById('nav-quiz').textContent = t.nav[2];
+        document.getElementById('nav-badges').textContent = t.nav[3];
+        document.getElementById('mascot-badge').textContent = t.mascotBadge;
+        document.getElementById('btn-open-shop').textContent = t.openShop;
+        document.getElementById('btn-next-day').textContent = t.nextDay;
+      }
+
       // --- Render ---
       function renderAll() {
         const w = WEATHERS[state.weatherIdx] || WEATHERS[0];
         const ev = MARKET_EVENTS[state.eventIdx] || MARKET_EVENTS[0];
 
+        applyLanguage();
+        const t = I18N[state.lang === 'en' ? 'en' : 'vi'];
+        const wIdx = state.weatherIdx || 0;
         document.getElementById('header-level-badge').textContent = `Level ${state.level}`;
-        document.getElementById('header-day').textContent = `Ngày ${state.day} • ${w.short} ${w.icon}`;
+        document.getElementById('header-day').textContent = `${t.dayWord} ${state.day} • ${t.weathers[wIdx]} ${w.icon}`;
         document.getElementById('header-rep').textContent = `${state.reputation}%`;
         document.getElementById('header-rep-pill').classList.toggle('hidden', state.level < 2);
-        document.getElementById('header-spend').textContent = `${state.jars.spend} Xu`;
+        document.getElementById('header-spend').textContent = `${state.jars.spend} ${t.coin}`;
         document.getElementById('header-stars').textContent = state.stars;
         document.getElementById('btn-mute').textContent = state.muted ? '🔇' : '🔊';
-        document.getElementById('mascot-tip').textContent = w.tip;
+        document.getElementById('mascot-tip').textContent = t.tips[wIdx];
 
         const debtPill = document.getElementById('header-debt-pill');
         if (state.level >= 3 && state.loanRemaining > 0) {
@@ -1051,9 +1125,9 @@
 
         // Weather & Event
         document.getElementById('weather-icon').textContent = w.icon;
-        document.getElementById('weather-title').textContent = `Ngày ${state.day}: ${w.title}`;
-        document.getElementById('weather-desc').textContent = w.desc;
-        document.getElementById('shop-spend-display').textContent = `${state.jars.spend} Xu`;
+        document.getElementById('weather-title').textContent = `${t.dayWord} ${state.day}: ${t.weatherTitles[wIdx]}`;
+        document.getElementById('weather-desc').textContent = t.weatherDescs[wIdx];
+        document.getElementById('shop-spend-display').textContent = `${state.jars.spend} ${t.coin}`;
         document.getElementById('event-icon').textContent = ev.icon;
         document.getElementById('event-text').textContent = ev.text;
         document.getElementById('customer-mix-text').textContent = w.mix;
@@ -2066,6 +2140,13 @@
         currentQuizIdx = (currentQuizIdx + 1) % QUIZ_ITEMS.length;
         sfx.pop();
         renderQuiz();
+      });
+
+      document.getElementById('btn-lang').addEventListener('click', () => {
+        state.lang = state.lang === 'en' ? 'vi' : 'en';
+        sfx.pop();
+        saveState();
+        renderAll();
       });
 
       document.getElementById('btn-mute').addEventListener('click', () => {
