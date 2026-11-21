@@ -542,6 +542,19 @@
         </div>
       </div>
 
+      <!-- Consolidated Chain P&L Report (Main Store + Branch 2) -->
+      <div class="kid-card p-4 sm:p-5 bg-gradient-to-r from-indigo-50 to-purple-50 border-indigo-200 space-y-2.5">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <h3 id="lbl-pnl-title" class="text-base sm:text-lg font-extrabold text-indigo-950 flex items-center gap-2">
+            <span>🏢</span> Báo Cáo P&amp;L Toàn Chuỗi (Tiệm Chính &amp; Chi Nhánh 2)
+          </h3>
+          <button id="btn-export-history" type="button" class="kid-btn px-3 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs">
+            ⬇️ Xuất CSV Toàn Bộ
+          </button>
+        </div>
+        <div id="chain-pnl-grid" class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs"></div>
+      </div>
+
       <div class="kid-card p-4 sm:p-5 space-y-3">
         <h3 class="text-lg font-extrabold text-slate-800 flex items-center gap-2">
           <span>🏆</span> <span id="lbl-badges-title">Bộ Sưu Tập Huy Hiệu</span>
@@ -682,6 +695,15 @@
           <span>🐷 Lãi tuần Hũ Tiết Kiệm (+5%):</span>
           <span id="sum-interest">+0 Xu</span>
         </div>
+      </div>
+
+      <div id="sum-optimal-box" class="bg-sky-50 border-2 border-sky-200 rounded-2xl p-3 space-y-1.5 text-xs">
+        <div class="flex items-center justify-between font-extrabold text-sky-950">
+          <span id="sum-opt-title">🎯 So sánh phương án tối ưu</span>
+          <span id="sum-opt-score" class="px-2 py-0.5 rounded-full bg-sky-200 text-sky-900">100%</span>
+        </div>
+        <p id="sum-opt-actual" class="font-semibold text-slate-700"></p>
+        <p id="sum-opt-best" class="font-semibold text-sky-800"></p>
       </div>
 
       <button id="btn-next-day" type="button" class="kid-btn w-full py-3.5 rounded-2xl bg-amber-400 hover:bg-amber-500 text-amber-950 font-black text-base border-b-4 border-amber-600">
@@ -1358,6 +1380,7 @@
         renderGoals();
         renderBadges();
         renderProfitChart();
+        renderChainPnl();
         renderHistory();
       }
 
@@ -1599,23 +1622,91 @@
         }).join('');
       }
 
+      function renderChainPnl() {
+        const isEn = state.lang === 'en';
+        document.getElementById('lbl-pnl-title').innerHTML = isEn
+          ? '<span>🏢</span> Consolidated Chain P&amp;L (Main Store &amp; Branch #2)'
+          : '<span>🏢</span> Báo Cáo P&amp;L Toàn Chuỗi (Tiệm Chính &amp; Chi Nhánh 2)';
+        document.getElementById('btn-export-history').textContent = isEn ? '⬇️ Export All CSV' : '⬇️ Xuất CSV Toàn Bộ';
+
+        let b1Rev = 0, b1Cost = 0, b1Profit = 0, b2Net = 0;
+        state.history.forEach((h) => {
+          const b2 = h.branch2Net || 0;
+          b2Net += b2;
+          b1Rev += Math.max(0, (h.revenue || 0) - b2);
+          b1Cost += (h.cost || 0);
+          b1Profit += (typeof h.branch1Profit === 'number' ? h.branch1Profit : (h.profit - b2));
+        });
+        const totalNet = b1Profit + b2Net;
+        const c = isEn ? 'Coins' : 'Xu';
+
+        document.getElementById('chain-pnl-grid').innerHTML = `
+          <div class="bg-white rounded-xl p-3 border border-indigo-200 space-y-1">
+            <div class="font-extrabold text-slate-800">🏪 ${isEn ? 'Main Store' : 'Tiệm Chính'}</div>
+            <div class="text-slate-600">${isEn ? 'Revenue' : 'Doanh thu'}: <strong>${b1Rev} ${c}</strong></div>
+            <div class="text-rose-600">${isEn ? 'Total Cost' : 'Tổng chi phí'}: <strong>-${b1Cost} ${c}</strong></div>
+            <div class="font-black ${b1Profit >= 0 ? 'text-emerald-600' : 'text-rose-600'}">${isEn ? 'Net' : 'Lãi ròng'}: ${b1Profit >= 0 ? '+' : ''}${b1Profit} ${c}</div>
+          </div>
+          <div class="bg-white rounded-xl p-3 border border-indigo-200 space-y-1">
+            <div class="font-extrabold text-indigo-900">🏢 ${isEn ? 'Branch #2' : 'Chi Nhánh 2'}</div>
+            <div class="text-slate-600">${isEn ? 'Status' : 'Trạng thái'}: <strong>${state.branch2Owned ? (isEn ? 'Active ✅' : 'Đang chạy ✅') : (isEn ? 'Locked (Lv.7)' : 'Chưa mở (Lv.7)')}</strong></div>
+            <div class="font-black text-indigo-700">${isEn ? 'Net Contribution' : 'Lãi ròng đóng góp'}: +${b2Net} ${c}</div>
+          </div>
+          <div class="bg-white rounded-xl p-3 border-2 border-indigo-300 space-y-1">
+            <div class="font-extrabold text-indigo-950">📊 ${isEn ? 'Total Chain P&L' : 'Tổng Lãi Toàn Chuỗi'}</div>
+            <div class="text-slate-600">${isEn ? 'Total Days' : 'Tổng số ngày'}: <strong>${state.history.length}</strong></div>
+            <div class="text-base font-black ${totalNet >= 0 ? 'text-emerald-600' : 'text-rose-600'}">${totalNet >= 0 ? '+' : ''}${totalNet} ${c}</div>
+          </div>
+        `;
+      }
+
       function renderHistory() {
+        const isEn = state.lang === 'en';
         const list = document.getElementById('history-list');
         if (state.history.length === 0) {
-          list.innerHTML = `<p class="text-slate-500 font-medium text-center py-4">Chưa có ngày bán hàng nào. Bé hãy mở cửa hàng ở tab Tiệm Nhỏ nhé!</p>`;
+          list.innerHTML = `<p class="text-slate-500 font-medium text-center py-4">${isEn ? 'No sales days yet. Open your shop to see detailed reports!' : 'Chưa có ngày bán hàng nào. Bé hãy mở cửa hàng ở tab Tiệm Nhỏ nhé!'}</p>`;
           return;
         }
-        list.innerHTML = state.history.slice().reverse().slice(0, 20).map((h) => `
-          <div class="flex flex-wrap items-center justify-between gap-2 bg-amber-50/70 border border-amber-200 rounded-xl px-3.5 py-2.5">
-            <div>
-              <span class="font-extrabold text-amber-950">Ngày ${h.day} (Lv.${h.level || 1})</span>
-              <span class="text-xs text-slate-600 ml-2">Bán ${h.soldLem}🍋 ${h.soldCoo}🍪 ${h.soldTea ? h.soldTea + '🍑' : ''}</span>
+        const crmMap = {
+          none: isEn ? 'No CRM' : 'Không CRM',
+          student: isEn ? 'Students' : 'Học sinh',
+          office: isEn ? 'Office' : 'Văn phòng',
+          tourist: isEn ? 'Tourists' : 'Du lịch'
+        };
+        list.innerHTML = state.history.slice().reverse().map((h) => {
+          const eff = typeof h.effPct === 'number' ? h.effPct : 80;
+          const barW = Math.min(100, Math.max(8, eff));
+          const hasDetail = typeof h.stockedLem === 'number';
+          return `
+            <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-3 space-y-1.5">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-1.5">
+                  <span class="text-base">${h.weatherIcon || '☀️'}</span>
+                  <span class="font-extrabold text-amber-950">${isEn ? 'Day' : 'Ngày'} ${h.day} (Lv.${h.level || 1})</span>
+                  ${h.crmStrategy && h.crmStrategy !== 'none' ? `<span class="text-[10px] font-bold bg-orange-100 text-orange-800 px-2 py-0.5 rounded-full">${crmMap[h.crmStrategy] || ''}</span>` : ''}${h.branch2Net > 0 ? `<span class="text-[10px] font-bold bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded-full">🏢 CN2: +${h.branch2Net}</span>` : ''}
+                </div>
+                <div class="font-extrabold ${h.profit >= 0 ? 'text-emerald-600' : 'text-rose-600'}">
+                  ${isEn ? 'Profit' : 'Lãi'}: ${h.profit >= 0 ? '+' : ''}${h.profit} ${isEn ? 'c' : 'Xu'}
+                </div>
+              </div>
+              ${hasDetail ? `
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-1 text-[11px] font-medium text-slate-700">
+                  <div>📦 ${isEn ? 'Stock/Price' : 'Nhập & Giá'}: <strong>${h.stockedLem}🍋</strong>(${h.priceLem}đ) • <strong>${h.stockedCoo}🍪</strong>(${h.priceCoo}đ)</div>
+                  <div>🛒 ${isEn ? 'Sold/Waste' : 'Bán / Hỏng'}: <strong>${h.soldLem}🍋 ${h.soldCoo}🍪</strong> ${h.wastedLem + h.wastedCoo > 0 ? `<span class="text-rose-600">(${isEn ? 'Waste' : 'Hỏng'} ${h.wastedLem}🍋 ${h.wastedCoo}🍪)</span>` : ''}</div>
+                </div>
+                <div class="bg-white rounded-xl p-2 border border-sky-200 space-y-1">
+                  <div class="flex items-center justify-between text-[11px] font-bold text-sky-900">
+                    <span>🎯 ${isEn ? 'Optimal' : 'Tối ưu'}: ~${h.optLemQty}🍋(${h.optLemPrice}đ), ~${h.optCooQty}🍪(${h.optCooPrice}đ) • ${crmMap[h.optCrm] || ''}</span>
+                    <span>${eff}%</span>
+                  </div>
+                  <div class="w-full bg-slate-200 rounded-full h-1.5 overflow-hidden">
+                    <div class="h-1.5 rounded-full ${eff >= 80 ? 'bg-emerald-500' : eff >= 50 ? 'bg-amber-400' : 'bg-rose-400'}" style="width: ${barW}%"></div>
+                  </div>
+                </div>
+              ` : ''}
             </div>
-            <div class="font-extrabold ${h.profit >= 0 ? 'text-emerald-600' : 'text-rose-600'}">
-              Lãi: ${h.profit >= 0 ? '+' : ''}${h.profit} Xu
-            </div>
-          </div>
-        `).join('');
+          `;
+        }).join('');
       }
 
       function renderQuiz() {
@@ -1867,7 +1958,21 @@
         }
       }
 
+      function computeOptimalPlan(w, ev, lemCost, cooCost, teaCost) {
+        const bestLemPrice = Math.max(lemCost + 1, w.lemFair + ev.fairDelta);
+        const bestCooPrice = Math.max(cooCost + 1, w.cooFair + ev.fairDelta);
+        const bestTeaPrice = Math.max(teaCost + 2, w.teaFair + ev.fairDelta);
+        const bestLemQty = Math.round(w.lemBase * ev.lemMult);
+        const bestCooQty = Math.round(w.cooBase * ev.cooMult);
+        const bestCrm = (w.id === 'cloudy' || w.id === 'rainy') ? 'office' : (w.id === 'festival' ? 'tourist' : 'student');
+        const estProfit = bestLemQty * (bestLemPrice - lemCost) + bestCooQty * (bestCooPrice - cooCost);
+        return { bestLemPrice, bestCooPrice, bestTeaPrice, bestLemQty, bestCooQty, bestCrm, estProfit };
+      }
+
       function finishDay(soldLem, soldCoo, soldTea, soldCombo, soldSingleLem, soldSingleCoo, wantLem, wantCoo, rentPaid) {
+        const stockedLem = state.inventory.lemonade;
+        const stockedCoo = state.inventory.cookie;
+        const stockedTea = state.inventory.tea;
         const w = WEATHERS[state.weatherIdx] || WEATHERS[0];
         const ev = state.level >= 2 ? (MARKET_EVENTS[state.eventIdx] || MARKET_EVENTS[0]) : MARKET_EVENTS[0];
         const lemCost = getUnitCost('lemonade');
@@ -1944,18 +2049,41 @@
         if (soldCombo >= 3) unlockBadge('combo_master');
         checkMilestonesAndBadges();
 
+        const opt = computeOptimalPlan(w, ev, lemCost, cooCost, teaCost);
+        const effPct = opt.estProfit > 0 ? Math.max(0, Math.min(120, Math.round((profit / opt.estProfit) * 100))) : 100;
+
         state.history.push({
           day: state.day,
           level: state.level,
+          weatherId: w.id,
+          weatherIcon: w.icon,
+          stockedLem,
+          stockedCoo,
+          stockedTea,
+          priceLem: state.prices.lemonade,
+          priceCoo: state.prices.cookie,
+          priceTea: state.prices.tea,
+          wantLem,
+          wantCoo,
           soldLem,
           soldCoo,
           soldTea,
           soldCombo,
           wastedLem,
           wastedCoo,
+          crmStrategy: state.crmEnabled ? state.crmStrategy : 'none',
           revenue: rev + branch2Net,
           cost: costOfGoods + deliveryCommission + rentPaid + helperWage + crmFee,
-          profit
+          branch1Profit: profit - branch2Net,
+          branch2Net,
+          profit,
+          optLemQty: opt.bestLemQty,
+          optCooQty: opt.bestCooQty,
+          optLemPrice: opt.bestLemPrice,
+          optCooPrice: opt.bestCooPrice,
+          optCrm: opt.bestCrm,
+          optProfit: opt.estProfit,
+          effPct
         });
 
         saveState();
@@ -2009,6 +2137,22 @@
         const intRow = document.getElementById('sum-interest-row');
         intRow.classList.toggle('hidden', interest === 0);
         document.getElementById('sum-interest').textContent = `+${interest} Xu`;
+
+        const isEn = state.lang === 'en';
+        const crmNames = {
+          none: isEn ? 'No CRM' : 'Chưa bật CRM',
+          student: isEn ? 'Students' : 'Học sinh/SV',
+          office: isEn ? 'Office' : 'Văn phòng',
+          tourist: isEn ? 'Tourists' : 'Du lịch'
+        };
+        document.getElementById('sum-opt-title').textContent = isEn ? '🎯 Optimal Benchmark Today' : '🎯 So sánh phương án tối ưu';
+        document.getElementById('sum-opt-score').textContent = `${effPct}%`;
+        document.getElementById('sum-opt-actual').textContent = isEn
+          ? `Actual: Stocked ${stockedLem}🍋 @ ${state.prices.lemonade}c, ${stockedCoo}🍪 @ ${state.prices.cookie}c -> Profit ${profit}c`
+          : `Thực tế: Có ${stockedLem}🍋 (giá ${state.prices.lemonade}đ), ${stockedCoo}🍪 (giá ${state.prices.cookie}đ) -> Lãi ${profit} Xu`;
+        document.getElementById('sum-opt-best').textContent = isEn
+          ? `Optimal (${w.icon}): ~${opt.bestLemQty}🍋 @ ${opt.bestLemPrice}c, ~${opt.bestCooQty}🍪 @ ${opt.bestCooPrice}c • Best CRM: ${crmNames[opt.bestCrm]} (~${opt.estProfit}c)`
+          : `Tối ưu (${w.icon}): Nhập ~${opt.bestLemQty}🍋 (giá ${opt.bestLemPrice}đ), ~${opt.bestCooQty}🍪 (giá ${opt.bestCooPrice}đ) • Tệp hợp nhất: ${crmNames[opt.bestCrm]} (~${opt.estProfit} Xu)`;
 
         document.getElementById('summary-modal').classList.remove('hidden');
         sfx.fanfare();
@@ -2323,6 +2467,30 @@
       });
       document.getElementById('btn-ok-help').addEventListener('click', () => {
         document.getElementById('help-modal').classList.add('hidden');
+      });
+
+      document.getElementById('btn-export-history').addEventListener('click', () => {
+        if (state.history.length === 0) {
+          showToast(state.lang === 'en' ? 'No history to export yet.' : 'Chưa có dữ liệu để xuất CSV.');
+          return;
+        }
+        const rows = [['Ngay', 'Level', 'ThoiTiet', 'NhapChanh', 'GiaChanh', 'BanChanh', 'HongChanh', 'NhapBanh', 'GiaBanh', 'BanBanh', 'HongBanh', 'DoanhThu', 'ChiPhi', 'LaiChiNhanh2', 'LoiNhuan']];
+        state.history.forEach((h) => {
+          rows.push([
+            h.day, h.level || 1, h.weatherId || '',
+            h.stockedLem || 0, h.priceLem || 0, h.soldLem || 0, h.wastedLem || 0,
+            h.stockedCoo || 0, h.priceCoo || 0, h.soldCoo || 0, h.wastedCoo || 0,
+            h.revenue || 0, h.cost || 0, h.branch2Net || 0, h.profit || 0
+          ]);
+        });
+        const csv = '\uFEFF' + rows.map((r) => r.join(',')).join('\n');
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'bao_cao_thi_tran_xu_vang.csv';
+        a.click();
+        URL.revokeObjectURL(url);
       });
 
       document.getElementById('btn-reset-game').addEventListener('click', () => {
