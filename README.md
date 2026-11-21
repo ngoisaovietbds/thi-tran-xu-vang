@@ -1,5 +1,6 @@
 🐷 Thị Trấn Xu Vàng / Golden Coin Town
 ​🇻🇳 Tiếng Việt | 🇬🇧 English
+
 ​🇻🇳 Tiếng Việt
 ​Ứng dụng web giáo dục tài chính và tư duy kinh doanh ngành F&B dành cho trẻ từ 7 tuổi trở lên, thiết kế dưới dạng PWA (Progressive Web App) hỗ trợ song ngữ Việt / Anh (VI / EN) ngay trong ứng dụng.
 ​👉 Chơi trực tiếp tại: https://ngoisaovietbds.github.io/thi-tran-xu-vang/
@@ -16,6 +17,7 @@
 ​5. Level 5 — Mặt Bằng Cố Định & Giao Hàng: Chọn địa điểm thuê mặt bằng (0 / 6 / 12 Xu/ngày) và kênh App Giao Hàng (+50% đơn, phí sàn 20%).
 ​6. Level 6 — Thực Đơn Cao Cấp & CRM Theo Tệp Khách: Mở món Trà Đào Cam Sả 🍑 và chọn ưu đãi theo từng tệp (Học sinh/SV, Dân văn phòng, Khách du lịch).
 ​7. Level 7 — Mở Rộng Chuỗi Chi Nhánh: Đầu tư 150 Xu mở Chi Nhánh Thứ 2 tự vận hành sinh lời và theo dõi bảng lãi – lỗ (P&L) toàn chuỗi.
+
 ​🇬🇧 English
 ​An interactive F&B Economics & Financial Literacy PWA designed for children aged 7+, featuring a built-in Vietnamese / English (VI / EN) language switcher.
 ​👉 Play Live: https://ngoisaovietbds.github.io/thi-tran-xu-vang/
@@ -32,8 +34,10 @@
 ​5. Level 5 — Rent & Delivery: Choose store locations (0 / 6 / 12 Coins/day) and toggle Delivery App (+50% orders, 20% platform commission).
 ​6. Level 6 — Signature Menu & Segmented CRM: Unlock Peach Iced Tea 🍑 and run targeted CRM promos (Students, Office Workers, Tourists).
 ​7. Level 7 — Multi-Store Scaling: Invest 150 Coins to open Branch #2 for passive daily net profit and consolidated chain P&L reporting.
+
 ​📂 Source Structure / Cấu trúc mã nguồn
 thi-tran-xu-vang/
+
 ├── index.html      # Single-file app (Tailwind CSS, 7-Level F&B engine, VI/EN i18n, Web Audio API)
 ├── manifest.json   # PWA manifest (standalone display, app name, icons)
 ├── sw.js           # Service Worker for caching & offline play
