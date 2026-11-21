@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
-    html, body, button, input, a {
+    *, *::before, *::after {
       touch-action: manipulation;
     }
     body {
@@ -2349,6 +2349,17 @@
       loadState();
       renderAll();
       renderQuiz();
+
+      // Prevent iPadOS Safari/Chrome double-tap zoom on non-control areas while keeping 2-finger pinch zoom
+      let lastTouchEnd = 0;
+      document.addEventListener('touchend', function (e) {
+        if (e.touches && e.touches.length > 0) return;
+        const now = Date.now();
+        if (now - lastTouchEnd <= 320 && !e.target.closest('button, input, a, label')) {
+          e.preventDefault();
+        }
+        lastTouchEnd = now;
+      }, { passive: false });
 
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./sw.js').catch(() => {});
