@@ -156,7 +156,7 @@
             </div>
           </div>
           <div class="bg-white/90 border-2 border-amber-200 rounded-xl px-3 py-2 text-xs sm:text-sm font-bold text-amber-900 shrink-0">
-            Ví Chi Tiêu: <span id="shop-spend-display" class="text-amber-600 text-base">30 Xu</span>
+            <span id="lbl-shop-wallet">Ví Chi Tiêu:</span> <span id="shop-spend-display" class="text-amber-600 text-base">30 Xu</span>
           </div>
         </div>
         <div class="flex flex-wrap gap-2">
@@ -190,12 +190,12 @@
             <div class="flex items-center gap-2.5">
               <span class="text-4xl">🍋</span>
               <div>
-                <h3 class="text-lg font-extrabold text-slate-800">Nước Chanh Mát</h3>
+                <h3 id="title-lem" class="text-lg font-extrabold text-slate-800">Nước Chanh Mát</h3>
                 <p id="cost-label-lemonade" class="text-xs font-bold text-emerald-700">Giá nhập: 3 Xu / ly</p>
               </div>
             </div>
             <div class="text-right">
-              <span class="text-xs font-bold text-slate-500 block">Trong kho</span>
+              <span class="lbl-in-stock text-xs font-bold text-slate-500 block">Trong kho</span>
               <span id="stock-lemonade" class="text-xl font-black text-amber-600">0 ly</span>
             </div>
           </div>
@@ -204,7 +204,7 @@
 
           <!-- Buy Stock -->
           <div class="bg-amber-50 rounded-xl p-2.5 flex flex-wrap items-center justify-between gap-2">
-            <span class="text-xs sm:text-sm font-bold text-slate-700">Mua thêm:</span>
+            <span class="lbl-buy-more text-xs sm:text-sm font-bold text-slate-700">Mua thêm:</span>
             <div class="flex flex-wrap gap-1.5">
               <button type="button" data-buy="lemonade" data-qty="1" id="btn-buy-lem-1" class="kid-btn px-2.5 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-xs shadow-sm">+1 (3🪙)</button>
               <button type="button" data-buy="lemonade" data-qty="5" id="btn-buy-lem-5" class="kid-btn px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow-sm">+5 (15🪙)</button>
@@ -215,7 +215,7 @@
           <!-- Set Price -->
           <div class="bg-sky-50 rounded-xl p-2.5 space-y-1.5">
             <div class="flex items-center justify-between">
-              <span class="text-xs sm:text-sm font-bold text-slate-700">Giá bán 1 ly:</span>
+              <span id="lbl-sell-lem" class="text-xs sm:text-sm font-bold text-slate-700">Giá bán 1 ly:</span>
               <div class="flex items-center gap-2">
                 <button type="button" data-price="lemonade" data-delta="-1" class="kid-btn w-8 h-8 rounded-lg bg-white border-2 border-sky-300 font-black text-sky-700 hover:bg-sky-100">-</button>
                 <span id="price-lemonade" class="font-black text-base text-sky-900 w-14 text-center">5 Xu</span>
@@ -235,12 +235,12 @@
             <div class="flex items-center gap-2.5">
               <span class="text-4xl">🍪</span>
               <div>
-                <h3 class="text-lg font-extrabold text-slate-800">Bánh Quy Bơ</h3>
+                <h3 id="title-coo" class="text-lg font-extrabold text-slate-800">Bánh Quy Bơ</h3>
                 <p id="cost-label-cookie" class="text-xs font-bold text-emerald-700">Giá nhập: 4 Xu / cái</p>
               </div>
             </div>
             <div class="text-right">
-              <span class="text-xs font-bold text-slate-500 block">Trong kho</span>
+              <span class="lbl-in-stock text-xs font-bold text-slate-500 block">Trong kho</span>
               <span id="stock-cookie" class="text-xl font-black text-amber-600">0 cái</span>
             </div>
           </div>
@@ -249,7 +249,7 @@
 
           <!-- Buy Stock -->
           <div class="bg-amber-50 rounded-xl p-2.5 flex flex-wrap items-center justify-between gap-2">
-            <span class="text-xs sm:text-sm font-bold text-slate-700">Mua thêm:</span>
+            <span class="lbl-buy-more text-xs sm:text-sm font-bold text-slate-700">Mua thêm:</span>
             <div class="flex flex-wrap gap-1.5">
               <button type="button" data-buy="cookie" data-qty="1" id="btn-buy-coo-1" class="kid-btn px-2.5 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-xs shadow-sm">+1 (4🪙)</button>
               <button type="button" data-buy="cookie" data-qty="5" id="btn-buy-coo-5" class="kid-btn px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow-sm">+5 (20🪙)</button>
@@ -260,7 +260,7 @@
           <!-- Set Price -->
           <div class="bg-sky-50 rounded-xl p-2.5 space-y-1.5">
             <div class="flex items-center justify-between">
-              <span class="text-xs sm:text-sm font-bold text-slate-700">Giá bán 1 cái:</span>
+              <span id="lbl-sell-coo" class="text-xs sm:text-sm font-bold text-slate-700">Giá bán 1 cái:</span>
               <div class="flex items-center gap-2">
                 <button type="button" data-price="cookie" data-delta="-1" class="kid-btn w-8 h-8 rounded-lg bg-white border-2 border-sky-300 font-black text-sky-700 hover:bg-sky-100">-</button>
                 <span id="price-cookie" class="font-black text-base text-sky-900 w-14 text-center">7 Xu</span>
@@ -281,12 +281,12 @@
           <div class="flex items-center gap-2.5">
             <span class="text-4xl">🍑</span>
             <div>
-              <h3 class="text-base sm:text-lg font-extrabold text-slate-800">Trà Đào Cam Sả (Món Cao Cấp Lv.6)</h3>
+              <h3 id="title-tea" class="text-base sm:text-lg font-extrabold text-slate-800">Trà Đào Cam Sả (Món Cao Cấp Lv.6)</h3>
               <p id="cost-label-tea" class="text-xs font-bold text-emerald-700">Giá nhập: 5 Xu / ly • Biên lãi cao!</p>
             </div>
           </div>
           <div class="text-right">
-            <span class="text-xs font-bold text-slate-500 block">Trong kho</span>
+            <span class="lbl-in-stock text-xs font-bold text-slate-500 block">Trong kho</span>
             <span id="stock-tea" class="text-xl font-black text-orange-600">0 ly</span>
           </div>
         </div>
@@ -398,7 +398,7 @@
       <div id="level2-upgrades-card" class="hidden kid-card p-4 sm:p-5 space-y-3">
         <div class="flex items-center justify-between">
           <h3 class="text-base sm:text-lg font-extrabold text-slate-800 flex items-center gap-2">
-            <span>🛠️</span> Đầu Tư Nâng Cấp Tiệm
+            <span>🛠️</span> <span id="lbl-upgrades-title">Đầu Tư Nâng Cấp Tiệm</span>
           </h3>
           <span class="text-xs font-bold text-amber-700 bg-amber-100 px-2.5 py-0.5 rounded-full">Giảm chi phí &amp; tăng khách</span>
         </div>
@@ -414,7 +414,7 @@
             <span class="text-3xl">🛍️</span>
             <span class="text-xs font-extrabold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">Ví Hàng Ngày</span>
           </div>
-          <h3 class="text-lg font-extrabold text-slate-800">Hũ Chi Tiêu</h3>
+          <h3 id="lbl-jar-spend" class="text-lg font-extrabold text-slate-800">Hũ Chi Tiêu</h3>
           <p class="text-3xl font-black text-amber-600" id="jar-spend-val">30 Xu</p>
           <p class="text-xs font-medium text-slate-600">Dùng để mua nguyên liệu và nâng cấp tiệm.</p>
         </div>
@@ -424,7 +424,7 @@
             <span class="text-3xl">🐷</span>
             <span id="save-countdown-badge" class="text-xs font-extrabold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">Lãi +5% / tuần</span>
           </div>
-          <h3 class="text-lg font-extrabold text-slate-800">Hũ Tiết Kiệm</h3>
+          <h3 id="lbl-jar-save" class="text-lg font-extrabold text-slate-800">Hũ Tiết Kiệm</h3>
           <p class="text-3xl font-black text-emerald-600" id="jar-save-val">0 Xu</p>
           <p id="save-week-hint" class="text-xs font-medium text-slate-600">Cứ mỗi 7 ngày nhận thưởng +5% và đạt mốc 50/100 Xu được Bố Mẹ thưởng thêm!</p>
           <div class="flex flex-wrap gap-1.5 pt-1">
@@ -439,7 +439,7 @@
             <span class="text-3xl">💝</span>
             <span class="text-xs font-extrabold px-2 py-0.5 rounded-full bg-rose-100 text-rose-800">+2 ⭐ mỗi 5 Xu</span>
           </div>
-          <h3 class="text-lg font-extrabold text-slate-800">Hũ Chia Sẻ</h3>
+          <h3 id="lbl-jar-share" class="text-lg font-extrabold text-slate-800">Hũ Chia Sẻ</h3>
           <p class="text-3xl font-black text-rose-500" id="jar-share-val">0 Xu</p>
           <p class="text-xs font-medium text-slate-600">Góp xu trồng cây xanh &amp; tặng sách cho bạn nhỏ trong thị trấn.</p>
           <div class="flex gap-1.5 pt-1">
@@ -466,7 +466,7 @@
       <!-- Savings Goals -->
       <div class="kid-card p-4 sm:p-5 space-y-3">
         <h3 class="text-lg font-extrabold text-slate-800 flex items-center gap-2">
-          <span>🎯</span> Mục Tiêu Tiết Kiệm Của Bé
+          <span>🎯</span> <span id="lbl-goals-title">Mục Tiêu Tiết Kiệm Của Bé</span>
         </h3>
         <p class="text-xs sm:text-sm text-slate-600 font-medium">Mua đủ cả 3 mục tiêu là một điều kiện để hoàn thành Level 1!</p>
         <div id="goals-list" class="grid grid-cols-1 sm:grid-cols-3 gap-3"></div>
@@ -509,7 +509,7 @@
     <section id="tab-badges" class="hidden space-y-4">
       <div class="kid-card p-4 sm:p-5 bg-gradient-to-r from-amber-50 to-yellow-50 space-y-2">
         <h3 class="text-base sm:text-lg font-extrabold text-amber-950 flex items-center gap-2">
-          <span>📆</span> Báo Cáo Chu Kỳ 3 Tháng (90 Ngày)
+          <span>📆</span> <span id="lbl-quarter-title">Báo Cáo Chu Kỳ 3 Tháng (90 Ngày)</span>
         </h3>
         <div class="grid grid-cols-3 gap-2 text-center pt-1">
           <div class="bg-white rounded-xl p-2.5 border border-amber-200">
@@ -529,14 +529,14 @@
 
       <div class="kid-card p-4 sm:p-5 space-y-3">
         <h3 class="text-lg font-extrabold text-slate-800 flex items-center gap-2">
-          <span>🏆</span> Bộ Sưu Tập Huy Hiệu
+          <span>🏆</span> <span id="lbl-badges-title">Bộ Sưu Tập Huy Hiệu</span>
         </h3>
         <div id="badges-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3"></div>
       </div>
 
       <div class="kid-card p-4 sm:p-5 space-y-3">
         <h3 class="text-lg font-extrabold text-slate-800 flex items-center gap-2">
-          <span>📈</span> Biểu Đồ Lợi Nhuận Các Ngày Gần Đây
+          <span>📈</span> <span id="lbl-chart-title">Biểu Đồ Lợi Nhuận Các Ngày Gần Đây</span>
         </h3>
         <div id="profit-chart" class="flex items-end gap-2 h-36 bg-amber-50/70 border border-amber-200 rounded-2xl p-3 overflow-x-auto"></div>
       </div>
@@ -544,7 +544,7 @@
       <div class="kid-card p-4 sm:p-5 space-y-3">
         <div class="flex items-center justify-between">
           <h3 class="text-lg font-extrabold text-slate-800 flex items-center gap-2">
-            <span>📒</span> Nhật Ký Kinh Doanh
+            <span>📒</span> <span id="lbl-history-title">Nhật Ký Kinh Doanh</span>
           </h3>
           <button id="btn-reset-game" type="button" class="kid-btn px-3 py-1.5 rounded-lg bg-rose-100 hover:bg-rose-200 text-rose-700 font-bold text-xs">
             🔄 Chơi Lại Từ Đầu
@@ -936,14 +936,15 @@
       }
 
       function getPriceHint(item, price) {
+        const isEn = state.lang === 'en';
         const w = WEATHERS[state.weatherIdx] || WEATHERS[0];
         const ev = state.level >= 2 ? (MARKET_EVENTS[state.eventIdx] || MARKET_EVENTS[0]) : MARKET_EVENTS[0];
         const baseFair = item === 'lemonade' ? w.lemFair : item === 'cookie' ? w.cooFair : w.teaFair;
         const fair = baseFair + ev.fairDelta;
-        if (price <= fair - 1) return { text: 'Giá hời — Hút khách!', cls: 'text-emerald-600' };
-        if (price <= fair + 1) return { text: 'Hợp lý 👍', cls: 'text-sky-700' };
-        if (price <= fair + 2) return { text: 'Hơi đắt — Kén khách', cls: 'text-amber-600' };
-        return { text: 'Quá đắt — Khách bỏ đi!', cls: 'text-rose-600' };
+        if (price <= fair - 1) return { text: isEn ? 'Bargain — Hot demand!' : 'Giá hời — Hút khách!', cls: 'text-emerald-600' };
+        if (price <= fair + 1) return { text: isEn ? 'Fair price 👍' : 'Hợp lý 👍', cls: 'text-sky-700' };
+        if (price <= fair + 2) return { text: isEn ? 'Pricey — Fewer buyers' : 'Hơi đắt — Kén khách', cls: 'text-amber-600' };
+        return { text: isEn ? 'Too pricey — No buyers!' : 'Quá đắt — Khách bỏ đi!', cls: 'text-rose-600' };
       }
 
       // --- Helpers ---
@@ -1061,6 +1062,29 @@
         document.getElementById('mascot-badge').textContent = t.mascotBadge;
         document.getElementById('btn-open-shop').textContent = t.openShop;
         document.getElementById('btn-next-day').textContent = t.nextDay;
+
+        document.querySelectorAll('.lbl-buy-more').forEach((el) => { el.textContent = isEn ? 'Buy stock:' : 'Mua thêm:'; });
+        document.querySelectorAll('.lbl-in-stock').forEach((el) => { el.textContent = isEn ? 'In stock' : 'Trong kho'; });
+        const setTxt = (id, vi, en) => { const el = document.getElementById(id); if (el) el.textContent = isEn ? en : vi; };
+        setTxt('lbl-shop-wallet', 'Ví Chi Tiêu:', 'Spend Wallet:');
+        setTxt('title-lem', 'Nước Chanh Mát', 'Fresh Lemonade');
+        setTxt('title-coo', 'Bánh Quy Bơ', 'Butter Cookie');
+        setTxt('title-tea', 'Trà Đào Cam Sả (Món Cao Cấp Lv.6)', 'Peach Iced Tea (Lv.6 Signature)');
+        setTxt('lbl-sell-lem', 'Giá bán 1 ly:', 'Price per cup:');
+        setTxt('lbl-sell-coo', 'Giá bán 1 cái:', 'Price per cookie:');
+        setTxt('lbl-jar-spend', 'Hũ Chi Tiêu', 'Spend Jar');
+        setTxt('lbl-jar-save', 'Hũ Tiết Kiệm', 'Save Jar');
+        setTxt('lbl-jar-share', 'Hũ Chia Sẻ', 'Share Jar');
+        setTxt('lbl-goals-title', 'Mục Tiêu Tiết Kiệm Của Bé', 'Savings Goals');
+        setTxt('lbl-badges-title', 'Bộ Sưu Tập Huy Hiệu', 'Badge Collection');
+        setTxt('lbl-chart-title', 'Biểu Đồ Lợi Nhuận Các Ngày Gần Đây', 'Recent Profit Chart');
+        setTxt('lbl-history-title', 'Nhật Ký Kinh Doanh', 'Business Log');
+        setTxt('lbl-quarter-title', 'Báo Cáo Chu Kỳ 3 Tháng (90 Ngày)', '90-Day Quarter Report');
+        setTxt('lbl-upgrades-title', 'Đầu Tư Nâng Cấp Tiệm', 'Shop Upgrades');
+        setTxt('spoil-warn-lem', '⚠️ Nước chanh bán không hết cuối ngày sẽ bị hỏng!', '⚠️ Unsold lemonade spoils at the end of the day!');
+        setTxt('spoil-warn-coo', '📦 Bánh quy để qua đêm chỉ giữ được một nửa còn giòn!', '📦 Half of unsold cookies stay fresh overnight!');
+        setTxt('btn-advance-level', '🚀 Lên Level Tiếp Theo!', '🚀 Level Up Now!');
+        setTxt('btn-reset-game', '🔄 Chơi Lại Từ Đầu', '🔄 Reset Game');
       }
 
       // --- Render ---
@@ -1117,9 +1141,10 @@
         const lemCost = getUnitCost('lemonade');
         const cooCost = getUnitCost('cookie');
         const teaCost = getUnitCost('tea');
-        document.getElementById('cost-label-lemonade').textContent = `Giá nhập: ${lemCost} Xu / ly`;
-        document.getElementById('cost-label-cookie').textContent = `Giá nhập: ${cooCost} Xu / cái`;
-        document.getElementById('cost-label-tea').textContent = `Giá nhập: ${teaCost} Xu / ly • Biên lãi cao!`;
+        const isEn = state.lang === 'en';
+        document.getElementById('cost-label-lemonade').textContent = isEn ? `Cost: ${lemCost} Coins / cup` : `Giá nhập: ${lemCost} Xu / ly`;
+        document.getElementById('cost-label-cookie').textContent = isEn ? `Cost: ${cooCost} Coins / pc` : `Giá nhập: ${cooCost} Xu / cái`;
+        document.getElementById('cost-label-tea').textContent = isEn ? `Cost: ${teaCost} Coins / cup • High margin!` : `Giá nhập: ${teaCost} Xu / ly • Biên lãi cao!`;
 
         document.getElementById('btn-buy-lem-1').textContent = `+1 (${lemCost}🪙)`;
         document.getElementById('btn-buy-lem-5').textContent = `+5 (${lemCost * 5}🪙)`;
@@ -1131,25 +1156,25 @@
         document.getElementById('btn-buy-tea-5').textContent = `+5 (${teaCost * 5}🪙)`;
         document.getElementById('btn-buy-tea-10').textContent = `Sỉ +10 (${Math.round(teaCost * 10 * 0.7)}🪙)`;
 
-        document.getElementById('stock-lemonade').textContent = `${state.inventory.lemonade} ly`;
-        document.getElementById('stock-cookie').textContent = `${state.inventory.cookie} cái`;
-        document.getElementById('stock-tea').textContent = `${state.inventory.tea} ly`;
+        document.getElementById('stock-lemonade').textContent = `${state.inventory.lemonade} ${isEn ? 'cups' : 'ly'}`;
+        document.getElementById('stock-cookie').textContent = `${state.inventory.cookie} ${isEn ? 'pcs' : 'cái'}`;
+        document.getElementById('stock-tea').textContent = `${state.inventory.tea} ${isEn ? 'cups' : 'ly'}`;
 
-        document.getElementById('price-lemonade').textContent = `${state.prices.lemonade} Xu`;
-        document.getElementById('price-cookie').textContent = `${state.prices.cookie} Xu`;
-        document.getElementById('price-tea').textContent = `${state.prices.tea} Xu`;
+        document.getElementById('price-lemonade').textContent = `${state.prices.lemonade} ${t.coin}`;
+        document.getElementById('price-cookie').textContent = `${state.prices.cookie} ${t.coin}`;
+        document.getElementById('price-tea').textContent = `${state.prices.tea} ${t.coin}`;
 
         const lemHint = getPriceHint('lemonade', state.prices.lemonade);
         const lemHintEl = document.getElementById('hint-lemonade');
         lemHintEl.textContent = lemHint.text;
         lemHintEl.className = lemHint.cls;
-        document.getElementById('profit-lemonade').textContent = `Lãi: ${state.prices.lemonade - lemCost >= 0 ? '+' : ''}${state.prices.lemonade - lemCost} Xu/ly`;
+        document.getElementById('profit-lemonade').textContent = `${isEn ? 'Profit' : 'Lãi'}: ${state.prices.lemonade - lemCost >= 0 ? '+' : ''}${state.prices.lemonade - lemCost} ${t.coin}/${isEn ? 'cup' : 'ly'}`;
 
         const cooHint = getPriceHint('cookie', state.prices.cookie);
         const cooHintEl = document.getElementById('hint-cookie');
         cooHintEl.textContent = cooHint.text;
         cooHintEl.className = cooHint.cls;
-        document.getElementById('profit-cookie').textContent = `Lãi: ${state.prices.cookie - cooCost >= 0 ? '+' : ''}${state.prices.cookie - cooCost} Xu/cái`;
+        document.getElementById('profit-cookie').textContent = `${isEn ? 'Profit' : 'Lãi'}: ${state.prices.cookie - cooCost >= 0 ? '+' : ''}${state.prices.cookie - cooCost} ${t.coin}/${isEn ? 'pc' : 'cái'}`;
 
         // Location & Delivery (Lv.5+)
         renderLocations();
@@ -1219,9 +1244,9 @@
         }
 
         // Jars tab
-        document.getElementById('jar-spend-val').textContent = `${state.jars.spend} Xu`;
-        document.getElementById('jar-save-val').textContent = `${state.jars.save} Xu`;
-        document.getElementById('jar-share-val').textContent = `${state.jars.share} Xu`;
+        document.getElementById('jar-spend-val').textContent = `${state.jars.spend} ${t.coin}`;
+        document.getElementById('jar-save-val').textContent = `${state.jars.save} ${t.coin}`;
+        document.getElementById('jar-share-val').textContent = `${state.jars.share} ${t.coin}`;
 
         const daysLeftToInterest = 7 - (state.day % 7);
         document.getElementById('save-countdown-badge').textContent =
@@ -1267,7 +1292,44 @@
         const totalProfit = state.history.reduce((a, b) => a + b.profit, 0);
         const totalCoins = state.jars.spend + state.jars.save;
 
-        const meta = {
+        const isEn = state.lang === 'en';
+        const meta = isEn ? {
+          1: {
+            t: '🌟 Level 1: Business Apprentice',
+            s: 'Complete 90 profitable days & buy all 3 goals to unlock Level 2.',
+            r: [`📆 Cycle: ${Math.min(90, state.history.length)}/90 days`, `💰 Net Profit: ${totalProfit} Coins`, `🎯 Goals: ${state.boughtGoals.length}/${GOALS.length}`]
+          },
+          2: {
+            t: '🚀 Level 2: Junior Shop Owner',
+            s: 'Reach Reputation ≥ 90%, 2 upgrades, 300 Coins & 10 profitable days.',
+            r: [`❤️ Reputation: ${state.reputation}% / 90%`, `🛠️ Upgrades: ${state.upgrades.length}/2 • Profit days: ${state.lvl2ProfitDays}/10`, `🪙 Total: ${totalCoins}/300 Coins`]
+          },
+          3: {
+            t: '🎁 Level 3: Combo & Credit Strategy',
+            s: 'Reach 350 Coins, pay off all loans & unlock 4 badges for Level 4.',
+            r: [`🪙 Total: ${totalCoins}/350 Coins`, `🏦 Bank Loan: ${state.loanRemaining} Coins`, `🏆 Badges: ${state.unlockedBadges.length}/4`]
+          },
+          4: {
+            t: '📦 Level 4: Supply Chain & Food Cost',
+            s: 'Reach 450 Coins & 5 days with Food Cost ≤ 40% to unlock Level 5.',
+            r: [`🪙 Total: ${totalCoins}/450 Coins`, `📉 Good COGS days: ${state.lvl4GoodCogsDays}/5`, `📦 Wholesale -30%: Unlocked`]
+          },
+          5: {
+            t: '📍 Level 5: Fixed Rent & Delivery App',
+            s: 'Reach 650 Coins & 5 profitable days at School/Park for Level 6.',
+            r: [`🪙 Total: ${totalCoins}/650 Coins`, `📍 Rented spot profit: ${state.lvl5LocationProfitDays}/5d`, `🛵 Delivery fee: 20%`]
+          },
+          6: {
+            t: '🍑 Level 6: Signature Menu & Segmented CRM',
+            s: 'Reach 900 Coins & own all 4 upgrades to unlock Level 7.',
+            r: [`🪙 Total: ${totalCoins}/900 Coins`, `🛠️ Upgrades: ${state.upgrades.length}/${UPGRADES.length}`, `💳 Segmented CRM: Ready`]
+          },
+          7: {
+            t: '👑 Level 7: F&B Chain Boss (Branch #2)',
+            s: 'Max Level! Open Branch #2 for passive daily net profit & chain P&L.',
+            r: [`🏢 Branch #2: ${state.branch2Owned ? 'Active ✅' : 'Locked (150 Coins)'}`, `🪙 Net Worth: ${totalCoins} Coins`, `🏆 Badges: ${state.unlockedBadges.length}/${BADGES.length}`]
+          }
+        } : {
           1: {
             t: '🌟 Level 1: Tập Sự Kinh Doanh',
             s: 'Hoàn thành 90 ngày có lãi & mua hết 3 mục tiêu để lên Level 2.',
