@@ -324,16 +324,39 @@
         </div>
       </div>
 
-      <!-- Level 7: Multi-Store Branch 2 -->
-      <div id="level7-branch-card" class="hidden kid-card p-4 space-y-2.5 bg-gradient-to-r from-indigo-50 to-purple-50 border-indigo-200">
+      <!-- Level 7: Multi-Store Branch 2 (Realistic P&L Operations) -->
+      <div id="level7-branch-card" class="hidden kid-card p-4 space-y-3 bg-gradient-to-r from-indigo-50 to-purple-50 border-indigo-200">
         <div class="flex flex-wrap items-center justify-between gap-2">
           <div>
-            <h3 class="text-base font-extrabold text-indigo-950">🏢 Chuỗi Chi Nhánh Thứ 2 (Level 7)</h3>
-            <p class="text-xs font-medium text-indigo-800">Đầu tư 150 Xu mở thêm Chi Nhánh 2 có Quản lý ca tự vận hành, mang lại doanh thu thụ động mỗi ngày!</p>
+            <h3 class="text-base font-extrabold text-indigo-950">🏢 Quản Lý Chi Nhánh Thứ 2 (Level 7)</h3>
+            <p class="text-xs font-medium text-indigo-800">Vận hành độc lập: Trả lương Quản lý ca (6 Xu/ngày) + Tiền thuê mặt bằng + Nhập hàng riêng (ế cuối ngày cũng hỏng!).</p>
           </div>
           <button id="btn-open-branch2" type="button" class="kid-btn px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs">
             Mở Chi Nhánh 2 (150 🪙)
           </button>
+        </div>
+        <div id="branch2-ops-panel" class="hidden space-y-2.5 pt-2 border-t border-indigo-200">
+          <div class="bg-white/90 rounded-xl p-2.5 border border-indigo-200 flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <div class="text-xs font-extrabold text-indigo-950">🤝 Quyền Cửa Hàng Trưởng CN2 (Nhất quán chuỗi + Linh hoạt địa phương)</div>
+              <div class="text-[11px] font-medium text-slate-600">Giữ chuẩn chất lượng &amp; danh tiếng chung, nhưng cho phép trưởng chi nhánh tự chỉnh giá ±1 Xu theo khách địa phương &amp; tự nhập bù khi thiếu hàng.</div>
+            </div>
+            <button id="btn-b2-empower" type="button" class="kid-btn px-3 py-1.5 rounded-xl font-extrabold text-xs bg-slate-200 text-slate-700 shrink-0">
+              Theo Chuẩn Chuỗi
+            </button>
+          </div>
+          <div id="branch2-loc-options" class="grid grid-cols-1 sm:grid-cols-3 gap-2"></div>
+          <div class="bg-white rounded-xl p-2.5 border border-indigo-200 flex flex-wrap items-center justify-between gap-2">
+            <div class="text-xs font-bold text-slate-700">
+              Kho CN2: <span id="b2-stock-text" class="text-indigo-700">0🍋 • 0🍪 • 0🍑</span>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              <button type="button" data-b2-buy="lemonade" class="kid-btn px-2.5 py-1 rounded-lg bg-emerald-500 text-white font-bold text-xs">+5 🍋</button>
+              <button type="button" data-b2-buy="cookie" class="kid-btn px-2.5 py-1 rounded-lg bg-emerald-600 text-white font-bold text-xs">+5 🍪</button>
+              <button type="button" data-b2-buy="tea" class="kid-btn px-2.5 py-1 rounded-lg bg-orange-500 text-white font-bold text-xs">+5 🍑</button>
+              <button type="button" id="btn-b2-auto" class="kid-btn px-2.5 py-1 rounded-lg bg-indigo-600 text-white font-bold text-xs">⚡ Tự nhập (8🍋+6🍪)</button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -553,6 +576,7 @@
           </button>
         </div>
         <div id="chain-pnl-grid" class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs"></div>
+        <div id="chain-insights-box" class="bg-white rounded-xl p-3.5 border border-indigo-200 space-y-2 text-xs"></div>
       </div>
 
       <div class="kid-card p-4 sm:p-5 space-y-3">
@@ -583,7 +607,7 @@
     </section>
 
     <footer id="app-version-footer" class="text-center text-[11px] font-semibold text-amber-800/75 pt-4 pb-2">
-      Thị Trấn Xu Vàng • Phiên bản: v7.4 (22/11/2026) • Trọn bộ 7 Level F&amp;B
+      Thị Trấn Xu Vàng • Phiên bản: v7.6 (22/11/2026) • Trọn bộ 7 Level F&amp;B
     </footer>
   </main>
 
@@ -820,6 +844,12 @@
         { id: 'school', name: 'Cổng Trường', rent: 6, mult: 1.45, icon: '🏫' },
         { id: 'park', name: 'Công Viên Lớn', rent: 12, mult: 1.9, icon: '🌳' }
       ];
+      const B2_MANAGER_COST = 6;
+      const BRANCH2_LOCATIONS = [
+        { id: 'school', name: 'Cổng Trường CN2', rent: 6, mult: 1.35, icon: '🏫' },
+        { id: 'office', name: 'Khu Văn Phòng', rent: 10, mult: 1.65, icon: '🏢' },
+        { id: 'park', name: 'Công Viên CN2', rent: 12, mult: 1.85, icon: '🌳' }
+      ];
 
       const WEATHERS = [
         {
@@ -1006,6 +1036,9 @@
           crmEnabled: false,
           crmStrategy: 'student',
           branch2Owned: false,
+          branch2Loc: 'school',
+          branch2Empowered: true,
+          branch2Inv: { lemonade: 0, cookie: 0, tea: 0 },
           loanRemaining: 0,
           loanDaysLeft: 0,
           milestonesClaimed: [],
@@ -1033,6 +1066,7 @@
               state = Object.assign(createInitialState(), parsed);
               state.inventory = Object.assign({ lemonade: 0, cookie: 0, tea: 0 }, parsed.inventory || {});
               state.prices = Object.assign({ lemonade: 5, cookie: 7, tea: 11 }, parsed.prices || {});
+              state.branch2Inv = Object.assign({ lemonade: 0, cookie: 0, tea: 0 }, parsed.branch2Inv || {});
             }
           }
         } catch (e) {}
@@ -1325,6 +1359,25 @@
         }).join('');
 
         // Branch 2 (Lv.7)
+        document.getElementById('branch2-ops-panel').classList.toggle('hidden', !state.branch2Owned);
+        const empBtn = document.getElementById('btn-b2-empower');
+        if (state.branch2Empowered) {
+          empBtn.textContent = state.lang === 'en' ? '🤝 Empowered ✅' : '🤝 Trao Quyền Linh Hoạt ✅';
+          empBtn.className = 'kid-btn px-3 py-1.5 rounded-xl font-extrabold text-xs bg-indigo-600 text-white shrink-0';
+        } else {
+          empBtn.textContent = state.lang === 'en' ? '⚖️ Strict Chain' : '⚖️ Theo Chuẩn Chuỗi';
+          empBtn.className = 'kid-btn px-3 py-1.5 rounded-xl font-extrabold text-xs bg-slate-200 text-slate-700 shrink-0';
+        }
+        document.getElementById('b2-stock-text').textContent = `${state.branch2Inv.lemonade}🍋 • ${state.branch2Inv.cookie}🍪 • ${state.branch2Inv.tea}🍑`;
+        document.getElementById('branch2-loc-options').innerHTML = BRANCH2_LOCATIONS.map((loc) => {
+          const active = state.branch2Loc === loc.id;
+          return `
+            <button type="button" data-b2-loc="${loc.id}" class="kid-btn p-2 rounded-xl border-2 text-left transition ${active ? 'border-indigo-500 bg-white shadow-sm' : 'border-indigo-200 bg-indigo-50/40'}">
+              <div class="font-extrabold text-[11px] text-indigo-950">${loc.icon} ${loc.name}</div>
+              <div class="text-[10px] font-bold text-rose-600">Thuê: ${loc.rent} Xu + QL 6 Xu • Khách x${loc.mult}</div>
+            </button>
+          `;
+        }).join('');
         const b2Btn = document.getElementById('btn-open-branch2');
         if (state.branch2Owned) {
           b2Btn.textContent = '✅ Chi Nhánh 2 Đang Hoạt Động';
@@ -1632,11 +1685,15 @@
           : '<span>🏢</span> Báo Cáo P&amp;L Toàn Chuỗi (Tiệm Chính &amp; Chi Nhánh 2)';
         document.getElementById('btn-export-history').textContent = isEn ? '⬇️ Export All CSV' : '⬇️ Xuất CSV Toàn Bộ';
 
-        let b1Rev = 0, b1Cost = 0, b1Profit = 0, b2Net = 0;
+        let b1Rev = 0, b1Cost = 0, b1Profit = 0, b2Rev = 0, b2Cost = 0, b2Net = 0;
         state.history.forEach((h) => {
           const b2 = h.branch2Net || 0;
+          const r2 = typeof h.branch2Rev === 'number' ? h.branch2Rev : (b2 > 0 ? b2 : 0);
+          const c2 = typeof h.branch2Cost === 'number' ? h.branch2Cost : 0;
+          b2Rev += r2;
+          b2Cost += c2;
           b2Net += b2;
-          b1Rev += Math.max(0, (h.revenue || 0) - b2);
+          b1Rev += Math.max(0, (h.revenue || 0) - r2);
           b1Cost += (h.cost || 0);
           b1Profit += (typeof h.branch1Profit === 'number' ? h.branch1Profit : (h.profit - b2));
         });
@@ -1651,15 +1708,66 @@
             <div class="font-black ${b1Profit >= 0 ? 'text-emerald-600' : 'text-rose-600'}">${isEn ? 'Net' : 'Lãi ròng'}: ${b1Profit >= 0 ? '+' : ''}${b1Profit} ${c}</div>
           </div>
           <div class="bg-white rounded-xl p-3 border border-indigo-200 space-y-1">
-            <div class="font-extrabold text-indigo-900">🏢 ${isEn ? 'Branch #2' : 'Chi Nhánh 2'}</div>
-            <div class="text-slate-600">${isEn ? 'Status' : 'Trạng thái'}: <strong>${state.branch2Owned ? (isEn ? 'Active ✅' : 'Đang chạy ✅') : (isEn ? 'Locked (Lv.7)' : 'Chưa mở (Lv.7)')}</strong></div>
-            <div class="font-black text-indigo-700">${isEn ? 'Net Contribution' : 'Lãi ròng đóng góp'}: +${b2Net} ${c}</div>
+            <div class="font-extrabold text-indigo-900">🏢 ${isEn ? 'Branch #2' : 'Chi Nhánh 2'} ${state.branch2Owned ? '✅' : '(Lv.7)'}</div>
+            <div class="text-slate-600">${isEn ? 'Revenue' : 'Doanh thu'}: <strong>${b2Rev} ${c}</strong></div>
+            <div class="text-rose-600">${isEn ? 'Cost (COGS+Rent+Mgr)' : 'Chi phí (Vốn+Thuê+QL)'}: <strong>-${b2Cost} ${c}</strong></div>
+            <div class="font-black ${b2Net >= 0 ? 'text-indigo-700' : 'text-rose-600'}">${isEn ? 'Net' : 'Lãi ròng'}: ${b2Net >= 0 ? '+' : ''}${b2Net} ${c}</div>
           </div>
           <div class="bg-white rounded-xl p-3 border-2 border-indigo-300 space-y-1">
             <div class="font-extrabold text-indigo-950">📊 ${isEn ? 'Total Chain P&L' : 'Tổng Lãi Toàn Chuỗi'}</div>
             <div class="text-slate-600">${isEn ? 'Total Days' : 'Tổng số ngày'}: <strong>${state.history.length}</strong></div>
             <div class="text-base font-black ${totalNet >= 0 ? 'text-emerald-600' : 'text-rose-600'}">${totalNet >= 0 ? '+' : ''}${totalNet} ${c}</div>
           </div>
+        `;
+
+        // Analytical Insights: Evaluation + Root Cause + Forecast & Optimization
+        const insightsEl = document.getElementById('chain-insights-box');
+        if (state.history.length === 0) {
+          insightsEl.innerHTML = `<p class="text-slate-500 font-semibold">${isEn ? 'Open your shop for at least 1 day to unlock Root-Cause & Forecast Analytics.' : 'Hãy bán ít nhất 1 ngày để hệ thống phân tích nguyên nhân lãi/lỗ và dự báo tối ưu.'}</p>`;
+          return;
+        }
+        const totalRevAll = b1Rev + b2Rev;
+        const marginPct = totalRevAll > 0 ? Math.round((totalNet / totalRevAll) * 100) : 0;
+        const totalWasteLem = state.history.reduce((a, h) => a + (h.wastedLem || 0), 0);
+        const totalWasteCoo = state.history.reduce((a, h) => a + (h.wastedCoo || 0), 0);
+        const lossDays = state.history.filter((h) => h.profit < 0).length;
+        const avgEff = Math.round(state.history.filter((h) => typeof h.effPct === 'number').reduce((a, h) => a + h.effPct, 0) / Math.max(1, state.history.filter((h) => typeof h.effPct === 'number').length));
+
+        const verdict = marginPct >= 35
+          ? (isEn ? '🌟 Excellent Margin' : '🌟 Hiệu quả Xuất sắc')
+          : marginPct >= 15
+          ? (isEn ? '✅ Healthy Operations' : '✅ Vận hành Ổn định')
+          : (isEn ? '⚠️ Needs Optimization' : '⚠️ Cần Tối Ưu Ngay');
+
+        const causes = [];
+        if (totalWasteLem + totalWasteCoo > 10) {
+          causes.push(isEn ? `Spoilage loss: ${totalWasteLem} lemons & ${totalWasteCoo} cookies wasted.` : `Hao hụt tồn kho cao: đã hỏng ${totalWasteLem}🍋 và ${totalWasteCoo}🍪 làm mòn lợi nhuận.`);
+        }
+        if (lossDays > 0) {
+          causes.push(isEn ? `${lossDays} loss-making day(s) due to fixed rent/staff exceeding low demand.` : `Có ${lossDays} ngày bị lỗ do chi phí cố định (mặt bằng/nhân sự) vượt doanh thu ngày vắng.`);
+        }
+        if (state.branch2Owned && b2Net === 0) {
+          causes.push(isEn ? 'Branch #2 is open but has not completed a sales day yet.' : 'Chi nhánh 2 mới mở nhưng chưa chạy xong ngày bán hàng nào.');
+        }
+        if (causes.length === 0) {
+          causes.push(isEn ? `Strong pricing discipline (avg efficiency ${avgEff || 85}% vs optimal).` : `Kiểm soát giá và tồn kho tốt (hiệu suất trung bình đạt ${avgEff || 85}% so với phương án tối ưu).`);
+        }
+
+        const nextW = WEATHERS[state.weatherIdx] || WEATHERS[0];
+        const forecastAction = nextW.id === 'rainy'
+          ? (isEn ? 'Rainy forecast: Cut Lemonade stock, raise Cookie price +1–2c, and avoid hiring extra staff.' : 'Dự báo ngày mai Trời Mưa: Cắt giảm nhập Nước Chanh, tăng giá Bánh Quy thêm 1–2 Xu và không thuê phụ bếp.')
+          : nextW.id === 'festival'
+          ? (isEn ? 'Festival forecast: Enable Combo, hire Helper Bunny, and keep prices competitive for high volume.' : 'Dự báo Lễ Hội: Bật Combo 🍋+🍪, thuê Thỏ Phụ Bếp và giữ giá vừa phải để tối đa hóa sản lượng.')
+          : (isEn ? 'Sunny/Mild forecast: Pair Peach Tea with Student/Office CRM and stock balanced wholesale bundles.' : 'Dự báo Nắng/Mát: Đẩy mạnh Trà Đào kèm CRM Văn phòng/Học sinh và tận dụng gói sỉ -30% nếu kho đủ sức tiêu thụ.');
+
+        insightsEl.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-1 border-b border-indigo-100">
+            <span class="font-extrabold text-indigo-950">🧠 ${isEn ? 'Executive Diagnosis & Forecast' : 'Phân Tích Nguyên Nhân & Dự Báo Tối Ưu'}</span>
+            <span class="font-extrabold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-900">${verdict} (${isEn ? 'Margin' : 'Biên lãi'}: ${marginPct}%)</span>
+          </div>
+          <p><strong class="text-rose-700">🔍 ${isEn ? 'Root Causes' : 'Nguyên nhân kết quả'}:</strong> ${causes.join(' ')}</p>
+          <p><strong class="text-emerald-700">📈 ${isEn ? 'Next-Day Forecast & Action' : 'Dự báo & Hành động tăng lãi'}:</strong> ${forecastAction}</p>
+          ${state.branch2Owned ? `<p><strong class="text-indigo-700">🤝 ${isEn ? 'Branch #2 Governance' : 'Quản trị Chi nhánh 2'}:</strong> ${state.branch2Empowered ? (isEn ? 'Empowered mode active: local manager adjusts ±1c & auto-restocks to protect margin.' : 'Đang trao quyền cho Cửa hàng trưởng CN2 tự chỉnh giá ±1 Xu theo khách địa phương và tự nhập bù tránh đứt hàng.') : (isEn ? 'Strict chain mode: uniform pricing across both stores.' : 'Đang áp dụng chuẩn đồng nhất 100% giá và quy trình từ Tiệm Chính.')}</p>` : ''}
         `;
       }
 
@@ -2006,13 +2114,51 @@
         const helperWage = state.level >= 3 && state.hireHelper ? HELPER_COST : 0;
         const crmFee = state.level >= 6 && state.crmEnabled ? (CRM_STRATEGIES.find((x) => x.id === state.crmStrategy)?.cost || CRM_COST) : 0;
 
-        // Branch 2 passive net profit (Level 7)
-        let branch2Net = 0;
+        // Branch 2 realistic independent operation (Level 7)
+        let branch2Rev = 0, branch2Cost = 0, branch2Net = 0;
         if (state.level >= 7 && state.branch2Owned) {
-          branch2Net = Math.round(12 * (0.8 + (state.reputation / 100) * 0.6) + (w.id === 'festival' ? 10 : 0));
+          const b2Loc = BRANCH2_LOCATIONS.find((l) => l.id === state.branch2Loc) || BRANCH2_LOCATIONS[0];
+          const b2Rep = 0.7 + (state.reputation / 100) * 0.55;
+          const b2Noise = 0.85 + Math.random() * 0.3;
+          const b2WantLem = Math.max(0, Math.round(w.lemBase * 0.85 * b2Loc.mult * b2Rep * b2Noise));
+          const b2WantCoo = Math.max(0, Math.round(w.cooBase * 0.85 * b2Loc.mult * b2Rep * b2Noise));
+          const b2WantTea = Math.max(0, Math.round(w.teaBase * 0.85 * b2Loc.mult * b2Rep * b2Noise));
+
+          let b2AutoCost = 0;
+          if (state.branch2Empowered && state.branch2Inv.lemonade === 0 && state.branch2Inv.cookie === 0 && state.jars.spend >= 30) {
+            // Local manager proactively stocks a lean batch tailored to weather
+            const autoLem = Math.min(8, b2WantLem);
+            const autoCoo = Math.min(6, b2WantCoo);
+            b2AutoCost = autoLem * lemCost + autoCoo * cooCost;
+            if (state.jars.spend >= b2AutoCost) {
+              state.jars.spend -= b2AutoCost;
+              state.branch2Inv.lemonade += autoLem;
+              state.branch2Inv.cookie += autoCoo;
+            }
+          }
+
+          const b2PriceAdj = state.branch2Empowered ? (b2Loc.id === 'office' ? 1 : b2Loc.id === 'school' ? -1 : 0) : 0;
+          const b2SoldLem = Math.min(state.branch2Inv.lemonade, Math.max(0, b2WantLem + (b2PriceAdj < 0 ? 2 : 0)));
+          const b2SoldCoo = Math.min(state.branch2Inv.cookie, Math.max(0, b2WantCoo + (b2PriceAdj < 0 ? 1 : 0)));
+          const b2SoldTea = Math.min(state.branch2Inv.tea, b2WantTea);
+
+          const b2WasteLem = state.branch2Inv.lemonade - b2SoldLem;
+          const b2LeftCoo = state.branch2Inv.cookie - b2SoldCoo;
+          const b2KeptCoo = Math.floor(b2LeftCoo * 0.5);
+          const b2WasteCoo = b2LeftCoo - b2KeptCoo;
+          const b2WasteTea = state.branch2Inv.tea - b2SoldTea;
+
+          state.branch2Inv.lemonade = 0;
+          state.branch2Inv.cookie = b2KeptCoo;
+          state.branch2Inv.tea = 0;
+
+          branch2Rev = b2SoldLem * Math.max(2, state.prices.lemonade + b2PriceAdj) + b2SoldCoo * Math.max(2, state.prices.cookie + b2PriceAdj) + b2SoldTea * state.prices.tea;
+          const b2Cogs = (b2SoldLem + b2WasteLem) * lemCost + (b2SoldCoo + b2WasteCoo) * cooCost + (b2SoldTea + b2WasteTea) * teaCost;
+          branch2Cost = b2Cogs + b2Loc.rent + B2_MANAGER_COST;
+          branch2Net = branch2Rev - branch2Cost;
         }
 
-        state.jars.spend += Math.max(0, rev - deliveryCommission + branch2Net);
+        state.jars.spend = Math.max(0, state.jars.spend + rev - deliveryCommission + branch2Rev - (state.level >= 7 && state.branch2Owned ? (BRANCH2_LOCATIONS.find((l) => l.id === state.branch2Loc)?.rent || 6) + B2_MANAGER_COST : 0));
 
         let loanPaid = 0;
         if (state.level >= 3 && state.loanRemaining > 0 && state.loanDaysLeft > 0) {
@@ -2078,6 +2224,8 @@
           revenue: rev + branch2Net,
           cost: costOfGoods + deliveryCommission + rentPaid + helperWage + crmFee,
           branch1Profit: profit - branch2Net,
+          branch2Rev,
+          branch2Cost,
           branch2Net,
           profit,
           optLemQty: opt.bestLemQty,
@@ -2109,8 +2257,8 @@
         document.getElementById('sum-waste').textContent = `${wastedLem}🍋 ${wastedCoo}🍪 ${wastedTea ? wastedTea + '🍑' : ''}`;
 
         document.getElementById('sum-rev').textContent = `+${rev} Xu`;
-        document.getElementById('sum-branch2-row').classList.toggle('hidden', branch2Net === 0);
-        document.getElementById('sum-branch2').textContent = `+${branch2Net} Xu`;
+        document.getElementById('sum-branch2-row').classList.toggle('hidden', !(state.level >= 7 && state.branch2Owned));
+        document.getElementById('sum-branch2').textContent = `${branch2Net >= 0 ? '+' : ''}${branch2Net} Xu (Thu ${branch2Rev} - Chi ${branch2Cost})`;
 
         document.getElementById('sum-cost').textContent = `-${costOfGoods} Xu`;
         document.getElementById('sum-cogs-row').classList.toggle('hidden', state.level < 4);
@@ -2336,6 +2484,58 @@
         state.crmEnabled = true;
         state.crmStrategy = btn.dataset.crmStrat;
         sfx.pop();
+        saveState();
+        renderAll();
+      });
+
+      document.getElementById('btn-b2-empower').addEventListener('click', () => {
+        if (isSimulating) return;
+        state.branch2Empowered = !state.branch2Empowered;
+        sfx.pop();
+        saveState();
+        renderAll();
+      });
+
+      document.getElementById('branch2-loc-options').addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-b2-loc]');
+        if (!btn || isSimulating) return;
+        state.branch2Loc = btn.dataset.b2Loc;
+        sfx.pop();
+        saveState();
+        renderAll();
+      });
+
+      document.querySelectorAll('[data-b2-buy]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          if (isSimulating) return;
+          const item = btn.dataset.b2Buy;
+          const totalCost = getUnitCost(item) * 5;
+          if (state.jars.spend < totalCost) {
+            sfx.error();
+            showToast('Ví Chi Tiêu không đủ Xu để nhập hàng cho Chi Nhánh 2!');
+            return;
+          }
+          state.jars.spend -= totalCost;
+          state.branch2Inv[item] += 5;
+          sfx.coin();
+          saveState();
+          renderAll();
+        });
+      });
+
+      document.getElementById('btn-b2-auto').addEventListener('click', () => {
+        if (isSimulating) return;
+        const totalCost = getUnitCost('lemonade') * 8 + getUnitCost('cookie') * 6;
+        if (state.jars.spend < totalCost) {
+          sfx.error();
+          showToast(`Cần ${totalCost} Xu để tự nhập cho Chi Nhánh 2!`);
+          return;
+        }
+        state.jars.spend -= totalCost;
+        state.branch2Inv.lemonade += 8;
+        state.branch2Inv.cookie += 6;
+        sfx.coin();
+        showToast('⚡ Đã nhập 8🍋 + 6🍪 cho Chi Nhánh 2!');
         saveState();
         renderAll();
       });
