@@ -473,35 +473,47 @@
       </div>
     </section>
 
-    <!-- TAB 3: NEEDS VS WANTS QUIZ -->
+    <!-- TAB 3: F&B VALUE PROPOSITION CANVAS (CUSTOMER NEEDS, PAINS, GAINS) -->
     <section id="tab-quiz" class="hidden space-y-4">
-      <div class="kid-card p-5 sm:p-6 text-center space-y-4 max-w-xl mx-auto">
-        <div class="flex items-center justify-between text-xs font-extrabold text-slate-500">
-          <span>TRÒ CHƠI PHÂN BIỆT</span>
+      <div class="kid-card p-4 sm:p-6 text-center space-y-4 max-w-2xl mx-auto">
+        <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-extrabold text-slate-500">
+          <span id="quiz-header-title">🎯 ĐỌC VỊ KHÁCH HÀNG F&amp;B (VALUE CANVAS)</span>
           <span id="quiz-score-badge" class="bg-sky-100 text-sky-800 px-2.5 py-1 rounded-full">Đã đúng: 0 câu</span>
         </div>
 
-        <div id="quiz-card" class="bg-amber-50 border-2 border-amber-200 rounded-2xl p-5 space-y-3">
-          <div id="quiz-icon" class="text-6xl">🎒</div>
-          <h3 id="quiz-item" class="text-xl font-black text-slate-800"></h3>
-          <p id="quiz-context" class="text-sm font-medium text-slate-600"></p>
+        <div id="quiz-card" class="bg-amber-50 border-2 border-amber-200 rounded-2xl p-4 sm:p-5 space-y-2.5">
+          <div class="flex items-center justify-center gap-2">
+            <span id="quiz-icon" class="text-4xl sm:text-5xl">🎒</span>
+            <span id="quiz-segment-badge" class="text-xs font-extrabold px-3 py-1 rounded-full bg-white border border-amber-300 text-amber-900">Học sinh / Sinh viên</span>
+          </div>
+          <h3 id="quiz-item" class="text-lg sm:text-xl font-black text-slate-800"></h3>
+          <p id="quiz-context" class="text-xs sm:text-sm font-medium text-slate-600"></p>
         </div>
 
-        <div id="quiz-actions" class="grid grid-cols-2 gap-3">
-          <button type="button" data-answer="need" class="kid-btn py-3.5 px-4 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-black text-sm sm:text-base border-b-4 border-emerald-700">
-            ✅ Nhu Cầu<br><span class="text-xs font-semibold opacity-90">(Cần thiết để sống/học)</span>
+        <div id="quiz-actions" class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+          <button type="button" data-answer="job" class="kid-btn py-3 px-3 rounded-2xl bg-sky-500 hover:bg-sky-600 text-white font-black text-xs sm:text-sm border-b-4 border-sky-700">
+            🎯 <span id="btn-lbl-job">Việc Làm / Nhu Cầu</span><br><span id="btn-sub-job" class="text-[11px] font-semibold opacity-90">(Thói quen &amp; mục đích mua)</span>
           </button>
-          <button type="button" data-answer="want" class="kid-btn py-3.5 px-4 rounded-2xl bg-violet-500 hover:bg-violet-600 text-white font-black text-sm sm:text-base border-b-4 border-violet-700">
-            ✨ Mong Muốn<br><span class="text-xs font-semibold opacity-90">(Có thì vui, không cũng sao)</span>
+          <button type="button" data-answer="pain" class="kid-btn py-3 px-3 rounded-2xl bg-rose-500 hover:bg-rose-600 text-white font-black text-xs sm:text-sm border-b-4 border-rose-700">
+            😣 <span id="btn-lbl-pain">Nỗi Đau (Pain)</span><br><span id="btn-sub-pain" class="text-[11px] font-semibold opacity-90">(Điều khách ngại / bực mình)</span>
+          </button>
+          <button type="button" data-answer="gain" class="kid-btn py-3 px-3 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-black text-xs sm:text-sm border-b-4 border-emerald-700">
+            ✨ <span id="btn-lbl-gain">Mong Muốn (Gain)</span><br><span id="btn-sub-gain" class="text-[11px] font-semibold opacity-90">(Điểm cộng khiến khách thích)</span>
           </button>
         </div>
 
-        <div id="quiz-feedback" class="hidden rounded-2xl p-4 text-sm font-bold space-y-2">
+        <div id="quiz-feedback" class="hidden rounded-2xl p-4 text-xs sm:text-sm font-bold space-y-2 text-left">
           <p id="quiz-feedback-text"></p>
-          <button id="btn-next-quiz" type="button" class="kid-btn px-5 py-2 rounded-xl bg-amber-400 hover:bg-amber-500 text-amber-950 font-extrabold text-sm">
+          <button id="btn-next-quiz" type="button" class="kid-btn px-5 py-2 rounded-xl bg-amber-400 hover:bg-amber-500 text-amber-950 font-extrabold text-xs sm:text-sm">
             Câu Tiếp Theo ➡️
           </button>
         </div>
+      </div>
+
+      <!-- Value Proposition Canvas Quick Reference by Segment -->
+      <div class="kid-card p-4 sm:p-5 space-y-3 max-w-2xl mx-auto">
+        <h3 id="vpc-guide-title" class="text-sm sm:text-base font-extrabold text-slate-800">📊 Bản Đồ Đọc Vị 3 Tệp Khách Hàng F&amp;B (Value Canvas)</h3>
+        <div id="vpc-segments-grid" class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs"></div>
       </div>
     </section>
 
@@ -845,14 +857,91 @@
       ];
 
       const QUIZ_ITEMS = [
-        { icon: '🎒', item: 'Cặp sách đi học', context: 'Cặp cũ của bé đã bị rách quai, ngày mai phải đi học.', type: 'need', explain: 'Cặp sách giúp bé mang vở đi học mỗi ngày — đây là Nhu Cầu cần thiết!' },
-        { icon: '🤖', item: 'Robot đồ chơi phát sáng', context: 'Ở nhà bé đã có nhiều đồ chơi rồi nhưng con robot này rất ngầu.', type: 'want', explain: 'Đồ chơi mới rất vui nhưng không có cũng không sao — đây là Mong Muốn!' },
-        { icon: '🍱', item: 'Bữa trưa cơm và rau', context: 'Buổi trưa bụng đói cồn cào sau giờ học.', type: 'need', explain: 'Thức ăn dinh dưỡng giúp cơ thể khỏe mạnh và lớn nhanh — là Nhu Cầu!' },
-        { icon: '🍭', item: 'Kẹo mút cầu vồng khổng lồ', context: 'Bé vừa ăn cơm no xong và thấy hàng kẹo ngoài cổng.', type: 'want', explain: 'Kẹo ngọt chỉ là món ăn vặt cho vui, không phải Nhu Cầu thiết yếu!' },
-        { icon: '🧥', item: 'Áo mưa khi trời bão', context: 'Ngoài trời đang mưa to mà bé phải đi bộ về nhà.', type: 'need', explain: 'Áo mưa giúp bé không bị ướt và cảm lạnh — là Nhu Cầu bảo vệ sức khỏe!' },
-        { icon: '✨', item: 'Bộ sticker dán lấp lánh', context: 'Sticker rất đẹp để trang trí hộp bút.', type: 'want', explain: 'Sticker giúp đồ dùng đẹp hơn nhưng không bắt buộc phải có — là Mong Muốn!' },
-        { icon: '👟', item: 'Đôi giày thể dục vừa chân', context: 'Giày cũ của bé đã chật cứng làm đau ngón chân.', type: 'need', explain: 'Giày vừa chân để đi lại và tập thể dục an toàn là Nhu Cầu!' },
-        { icon: '🎮', item: 'Thẻ nạp trò chơi điện tử', context: 'Bé muốn mua thêm trang phục mới cho nhân vật trong game.', type: 'want', explain: 'Trang phục trong game chỉ để giải trí thêm — đây là Mong Muốn!' }
+        {
+          icon: '🎒', segVi: 'Học sinh / Sinh viên', segEn: 'Students',
+          itemVi: 'Giải khát nhanh giờ ra chơi hoặc tan học', itemEn: 'Quick thirst relief after school',
+          ctxVi: 'Nhóm bạn vừa tan học trời nắng, thói quen thường ghé quán ngay cổng trường mua nước uống nhanh.', ctxEn: 'Students leave school on a hot day and habitually grab a quick drink nearby.',
+          type: 'job',
+          expVi: 'Đúng rồi! Đây là Việc cần làm / Nhu cầu gốc (Customer Job) của nhóm Học sinh. Quán cần phục vụ nhanh và đặt gần cổng trường.',
+          expEn: 'Correct! That is their core Customer Job. Your stand needs fast service near school.'
+        },
+        {
+          icon: '🎒', segVi: 'Học sinh / Sinh viên', segEn: 'Students',
+          itemVi: 'Tiền tiêu vặt ít, giá ly nước quá đắt', itemEn: 'Tight allowance & overpriced drinks',
+          ctxVi: 'Bạn học sinh muốn uống cùng nhóm bạn nhưng thấy giá 15 Xu/ly nên đành quay đi.', ctxEn: 'Students want to buy with friends but walk away when a cup costs too much.',
+          type: 'pain',
+          expVi: 'Chuẩn! Đây là Nỗi đau (Pain) về giá. Giải pháp F&B: tạo Combo nhóm hoặc chương trình mua 2 ly tặng 1 bánh!',
+          expEn: 'Spot on! Price sensitivity is their Pain. Solution: group combos or buy-2-get-1-cookie promos!'
+        },
+        {
+          icon: '💼', segVi: 'Dân văn phòng', segEn: 'Office Workers',
+          itemVi: 'Đặt nước giao chậm, đổ tràn khi đang họp', itemEn: 'Late delivery & spilled cups before meetings',
+          ctxVi: 'Nhân viên văn phòng đặt 6 ly trà đào cho buổi họp chiều nhưng shipper tới trễ 20 phút và ly bị rỉ nước.', ctxEn: 'Office staff order 6 teas for a meeting, but delivery arrives late with leaky lids.',
+          type: 'pain',
+          expVi: 'Chính xác! Chờ lâu và đóng gói kém là Nỗi đau lớn nhất (Pain) của dân văn phòng — cần quy trình giao nhanh và ly nắp chắc.',
+          expEn: 'Correct! Slow delivery and messy packaging are top Pains for office workers.'
+        },
+        {
+          icon: '💼', segVi: 'Dân văn phòng', segEn: 'Office Workers',
+          itemVi: 'Đặt gộp đơn nhóm cả phòng vào 14h chiều', itemEn: 'Afternoon group orders for the whole team',
+          ctxVi: 'Thói quen mỗi chiều đi làm, cả phòng thường rủ nhau gọi nước và bánh ngọt để tỉnh táo làm việc.', ctxEn: 'Office teams habitually place afternoon drink & snack orders to stay energized.',
+          type: 'job',
+          expVi: 'Đúng! Đây là Thói quen / Việc cần làm (Customer Job). Quán nên có ưu đãi Freeship hoặc tặng bánh cho đơn nhóm từ 5 ly.',
+          expEn: 'Right! Afternoon group ordering is their Customer Job — ideal for Freeship & group perks.'
+        },
+        {
+          icon: '💼', segVi: 'Dân văn phòng', segEn: 'Office Workers',
+          itemVi: 'Được tặng kèm bánh quy & ghi chú tên từng người trên ly', itemEn: 'Free cookie perk & labeled cups per person',
+          ctxVi: 'Khi nhận đơn nhóm, mỗi ly đều dán tên rõ ràng và có thêm 1 túi bánh quy tặng kèm khiến cả phòng rất bất ngờ.', ctxEn: 'Each cup is neatly labeled by name with a surprise complimentary cookie.',
+          type: 'gain',
+          expVi: 'Tuyệt vời! Đây là Mong muốn / Điểm cộng (Gain) giúp dân văn phòng nhớ mãi và đặt lại hàng tuần!',
+          expEn: 'Great! Labeled cups & bonus treats are Gains that drive repeat office orders.'
+        },
+        {
+          icon: '📸', segVi: 'Khách du lịch / Vãng lai', segEn: 'Tourists / Walk-ins',
+          itemVi: 'Ly nước đẹp để chụp ảnh check-in & quà nhỏ mang về', itemEn: 'Photogenic drink & cute souvenir sticker',
+          ctxVi: 'Khách du lịch ghé thị trấn thích món đặc sản Trà Đào trang trí đẹp mắt kèm tấm thiệp nhỏ cảm ơn.', ctxEn: 'Tourists love an Instagrammable signature drink with a cute thank-you card.',
+          type: 'gain',
+          expVi: 'Chính xác! Khách vãng lai không tích điểm dài ngày, họ thích trải nghiệm đẹp & quà nhỏ (Gain) để chụp ảnh chia sẻ.',
+          expEn: 'Correct! Walk-in tourists value visual appeal & memorable little Gains over long-term points.'
+        },
+        {
+          icon: '📸', segVi: 'Khách du lịch / Vãng lai', segEn: 'Tourists / Walk-ins',
+          itemVi: 'Quán khuất tầm nhìn, menu rối khó chọn món đặc trưng', itemEn: 'Hidden stall & confusing menu',
+          ctxVi: 'Khách đi ngang công viên không biết quán bán món gì ngon nhất và phải đứng đợi hỏi giá rất lâu.', ctxEn: 'Walk-in visitors pass by because the sign is unclear and they do not know what is best.',
+          type: 'pain',
+          expVi: 'Chuẩn! Không rõ món đặc trưng và biển hiệu mờ là Nỗi đau (Pain) làm mất khách vãng lai — giải pháp là Biển Đèn Lồng & Combo nổi bật!',
+          expEn: 'Right! Unclear signage & menu confusion are Pains — solved by bright signs & featured Combos.'
+        },
+        {
+          icon: '👨‍👩‍👧', segVi: 'Gia đình có trẻ nhỏ', segEn: 'Families with Kids',
+          itemVi: 'Lo ngại đồ uống quá ngọt, đá không sạch hoặc mất vệ sinh', itemEn: 'Worried about excess sugar or hygiene',
+          ctxVi: 'Bố mẹ muốn mua nước cho bé nhưng rất sợ phẩm màu hóa học và quầy hàng bừa bộn.', ctxEn: 'Parents want a treat for their kids but worry about artificial syrup and cleanliness.',
+          type: 'pain',
+          expVi: 'Chính xác! Nỗi lo về an toàn vệ sinh & sức khỏe là Nỗi đau (Pain) của phụ huynh — quán sạch sẽ, chanh tươi sẽ ghi điểm tuyệt đối.',
+          expEn: 'Correct! Hygiene and health concerns are top Pains for parents.'
+        }
+      ];
+
+      const VPC_SEGMENTS = [
+        {
+          icon: '🎒', vi: 'Học sinh / SV', en: 'Students',
+          jobVi: 'Giải khát nhanh sau giờ học, đi theo nhóm bạn.', jobEn: 'Quick drinks after school with friends.',
+          painVi: 'Ít tiền, sợ giá cao, ngại đợi lâu.', painEn: 'Tight budget, dislikes waiting.',
+          gainVi: 'Combo rẻ, mua 2 tặng bánh, thẻ tích dấu.', gainEn: 'Cheap combos, buy-2-get-1-cookie.'
+        },
+        {
+          icon: '💼', vi: 'Dân văn phòng', en: 'Office Workers',
+          jobVi: 'Đặt đơn nhóm buổi chiều, cần tỉnh táo làm việc.', jobEn: 'Afternoon team orders for energy.',
+          painVi: 'Giao trễ giờ họp, ly đổ tràn, thiếu đồng đều.', painEn: 'Late delivery, spills, inconsistent taste.',
+          gainVi: 'Freeship đơn nhóm, dán tên từng ly, tặng bánh.', gainEn: 'Group freeship, labeled cups, bonus treat.'
+        },
+        {
+          icon: '📸', vi: 'Khách du lịch', en: 'Tourists',
+          jobVi: 'Tìm món đặc sản địa phương khi dạo chơi.', jobEn: 'Trying local signature drinks while sightseeing.',
+          painVi: 'Menu khó hiểu, quán khuất, ngại chờ lâu.', painEn: 'Unclear menu, hidden stall, long wait.',
+          gainVi: 'Ly đẹp dễ chụp ảnh, Combo đặc sản + quà nhỏ.', gainEn: 'Photogenic cups, signature combo + gift.'
+        }
       ];
 
       // --- State ---
@@ -1527,14 +1616,34 @@
       }
 
       function renderQuiz() {
+        const isEn = state.lang === 'en';
         const q = QUIZ_ITEMS[currentQuizIdx % QUIZ_ITEMS.length];
+        document.getElementById('quiz-header-title').textContent = isEn ? '🎯 F&B CUSTOMER VALUE CANVAS QUIZ' : '🎯 ĐỌC VỊ KHÁCH HÀNG F&B (VALUE CANVAS)';
         document.getElementById('quiz-icon').textContent = q.icon;
-        document.getElementById('quiz-item').textContent = q.item;
-        document.getElementById('quiz-context').textContent = q.context;
-        document.getElementById('quiz-score-badge').textContent = `Đã đúng: ${state.quizCorrect} câu`;
+        document.getElementById('quiz-segment-badge').textContent = isEn ? q.segEn : q.segVi;
+        document.getElementById('quiz-item').textContent = isEn ? q.itemEn : q.itemVi;
+        document.getElementById('quiz-context').textContent = isEn ? q.ctxEn : q.ctxVi;
+        document.getElementById('quiz-score-badge').textContent = isEn ? `Correct: ${state.quizCorrect}` : `Đã đúng: ${state.quizCorrect} câu`;
+        document.getElementById('btn-lbl-job').textContent = isEn ? 'Customer Job / Need' : 'Việc Làm / Nhu Cầu';
+        document.getElementById('btn-sub-job').textContent = isEn ? '(Habit & goal)' : '(Thói quen & mục đích)';
+        document.getElementById('btn-lbl-pain').textContent = isEn ? 'Pain Point' : 'Nỗi Đau (Pain)';
+        document.getElementById('btn-sub-pain').textContent = isEn ? '(Frustration / risk)' : '(Điều khách ngại / bực)';
+        document.getElementById('btn-lbl-gain').textContent = isEn ? 'Desired Gain' : 'Mong Muốn (Gain)';
+        document.getElementById('btn-sub-gain').textContent = isEn ? '(Delight & bonus)' : '(Điểm cộng giữ khách)';
+        document.getElementById('btn-next-quiz').textContent = isEn ? 'Next Question ➡️' : 'Câu Tiếp Theo ➡️';
         document.getElementById('quiz-feedback').classList.add('hidden');
         document.getElementById('quiz-actions').classList.remove('hidden');
         quizLocked = false;
+
+        document.getElementById('vpc-guide-title').textContent = isEn ? '📊 F&B Value Canvas by Customer Segment' : '📊 Bản Đồ Đọc Vị 3 Tệp Khách Hàng F&B (Value Canvas)';
+        document.getElementById('vpc-segments-grid').innerHTML = VPC_SEGMENTS.map((seg) => `
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-3 space-y-1.5">
+            <div class="font-extrabold text-sm text-amber-950">${seg.icon} ${isEn ? seg.en : seg.vi}</div>
+            <p><strong class="text-sky-700">🎯 ${isEn ? 'Job:' : 'Việc làm:'}</strong> ${isEn ? seg.jobEn : seg.jobVi}</p>
+            <p><strong class="text-rose-600">😣 ${isEn ? 'Pain:' : 'Nỗi đau:'}</strong> ${isEn ? seg.painEn : seg.painVi}</p>
+            <p><strong class="text-emerald-700">✨ ${isEn ? 'Gain:' : 'Mong muốn:'}</strong> ${isEn ? seg.gainEn : seg.gainVi}</p>
+          </div>
+        `).join('');
       }
 
       // --- Math Gate Modal ---
@@ -2010,21 +2119,23 @@
         document.getElementById('quiz-actions').classList.add('hidden');
         fb.classList.remove('hidden');
 
+        const isEn = state.lang === 'en';
+        const expText = isEn ? q.expEn : q.expVi;
         if (correct) {
           state.quizCorrect += 1;
           state.jars.spend += 5;
           sfx.coin();
-          fb.className = 'rounded-2xl p-4 text-sm font-bold space-y-2 bg-emerald-100 text-emerald-900 border-2 border-emerald-300 bounce-in';
-          fbText.textContent = `🎉 Chính xác! (+5 Xu) — ${q.explain}`;
+          fb.className = 'rounded-2xl p-4 text-xs sm:text-sm font-bold space-y-2 text-left bg-emerald-100 text-emerald-900 border-2 border-emerald-300 bounce-in';
+          fbText.textContent = isEn ? `🎉 Spot on! (+5 Coins) — ${expText}` : `🎉 Chính xác! (+5 Xu) — ${expText}`;
           checkMilestonesAndBadges();
           saveState();
           renderAll();
         } else {
           sfx.error();
-          fb.className = 'rounded-2xl p-4 text-sm font-bold space-y-2 bg-rose-100 text-rose-900 border-2 border-rose-300 bounce-in';
-          fbText.textContent = `💡 Chưa đúng rồi! — ${q.explain}`;
+          fb.className = 'rounded-2xl p-4 text-xs sm:text-sm font-bold space-y-2 text-left bg-rose-100 text-rose-900 border-2 border-rose-300 bounce-in';
+          fbText.textContent = isEn ? `💡 Not quite! — ${expText}` : `💡 Chưa đúng rồi! — ${expText}`;
         }
-        document.getElementById('quiz-score-badge').textContent = `Đã đúng: ${state.quizCorrect} câu`;
+        document.getElementById('quiz-score-badge').textContent = isEn ? `Correct: ${state.quizCorrect}` : `Đã đúng: ${state.quizCorrect} câu`;
       }
 
       // --- Event Listeners ---
@@ -2190,6 +2301,7 @@
         sfx.pop();
         saveState();
         renderAll();
+        renderQuiz();
       });
 
       document.getElementById('btn-mute').addEventListener('click', () => {
